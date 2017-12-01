@@ -8,8 +8,21 @@ module.exports = function (app, passport) {
         res.render("item_list.hbs", {item_list: item_list});
     });
 
+    const user = "owner";
     app.get("/:userID/:itemID", (req, res) => {
-        const item = null;
-       res.render("recover_item.hbs", {item: item});
+        const item = {name: "iPhone X", status: "In-Possession"};
+        //pseudo-code
+        if (user === "owner") {
+            res.render("recover_item.hbs", {item: item, owner: true});
+        } else {
+            res.render("recover_item.hbs", {item: item, owner: false});
+        }
+
+    });
+
+    app.post("/:userID/:itemID", (req, res) => {
+        if (Object.keys(req.body).length !== 0) {
+            console.log(req.body.textbox);
+        }
     });
 };
