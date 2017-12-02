@@ -4,11 +4,19 @@ module.exports = function (app, passport) {
     });
 
     app.get("/login", function (req,res){
-      res.render("login_registration.hbs");
+      res.render("login.hbs");
     });
 
     app.post("/login", function (req,res){
 
+    });
+
+    app.get("/registration", function (req,res){
+      res.render("registration.hbs");
+    });
+
+    app.post("/registration", function (req,res){
+      
     });
 
     app.get("/:userID", (req, res) => {
