@@ -1,27 +1,41 @@
-		<div id="login" class="animate form">
-			<form  action="/login" method="post">
-				<h1>Log in</h1>
-				<p>
-					<label for="username" class="uname" data-icon="u" > Your username </label>
-					<input id="username" name="username" required="required" type="text" placeholder="enter username here"/>
-				</p>
-				<p>
-					<label for="password" class="youpasswd" data-icon="p"> Your password </label>
-					<input id="password" name="password" required="required" type="password" placeholder="enter password here" />
-				</p>
-				<p class="keeplogin">
-					<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
-					<label for="loginkeeping">Keep me logged in</label>
-				</p>
-				<p class="login button">
-					<input type="submit" value="Login" />
-				</p>
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
 
-        <p class="change_link">
-					Not a member yet ?
-					<a href="/registration">Join us</a>
-				</p>
+<div class="col-sm-6 col-sm-offset-3">
 
-			</form>
+    <h1><span class="fa fa-sign-in"></span> Login</h1>
 
-		</div>
+    <!-- LOGIN FORM -->
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" class="btn btn-warning btn-lg">Login</button>
+    </form>
+
+    <hr>
+
+    <p>Need an account? <a href="/registration">Register</a></p>
+    <p>Or go <a href="/">home</a>.</p>
+
+</div>
+
+</div>
+</body>
+</html>
