@@ -4,7 +4,10 @@
 const { Pool, Client } = require('pg');
 //
 // connection with Database
-const connectionString = "postgres://postgres:Fuckitbro!1@localhost/largescaleProject";
+const user = "postgres";
+const pw = "Fuckitbro!1";
+
+const connectionString = "postgres://" + user + ":" + pw + "@localhost/largescaleProject";
 const client = new Client({
     connectionString: connectionString,
 });
