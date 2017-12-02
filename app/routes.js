@@ -15,9 +15,12 @@ module.exports = function (app, passport) {
       res.render("registration.hbs");
     });
 
-    app.post("/registration", function (req,res){
-      
-    });
+    app.post('/registration', passport.authenticate('local-signup', {
+        successRedirect : '/:userID', // redirect to the secure profile section
+        failureRedirect : '/registration', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
 
     app.get("/:userID", (req, res) => {
         const item_list = null;
