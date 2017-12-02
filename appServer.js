@@ -9,7 +9,6 @@ const bodyParser   = require('body-parser');
 const session      = require('express-session');
 const path         = require('path');
 const pg = require('pg')
-
 // connection with Database
 const connect = "postgres://admin:12345@localhost/largeScaleDB";
 
