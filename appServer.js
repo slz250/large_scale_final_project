@@ -8,10 +8,14 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const session      = require('express-session');
 const path         = require('path');
-const pg = require('pg')
-
-// connection with Database
-const connect = "postgres://admin:12345@localhost/largeScaleDB";
+// // const pg = require('pg');
+// const { Pool, Client } = require('pg');
+// //
+// // connection with Database
+// const connectionString = "postgres://admin:12345@localhost/largeScaleDB";
+// const client = new Client({
+//     connectionString: connectionString,
+// });
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -22,7 +26,7 @@ app.use(bodyParser());
 app.set('view engine', 'hbs');
 
 //Set Public Folder
-app.use(express.static(path.join(__dirname, 'public')));2
+app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret

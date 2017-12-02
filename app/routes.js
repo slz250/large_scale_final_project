@@ -1,4 +1,26 @@
+/**
+ * Here we are connecting to the db
+ */
+const { Pool, Client } = require('pg');
+//
+// connection with Database
+const connectionString = "postgres://postgres:Fuckitbro!1@localhost/largescaleProject";
+const client = new Client({
+    connectionString: connectionString,
+});
+client.connect();
+
 module.exports = function (app, passport) {
+    /**
+     * testing the database
+     */
+    app.get("/test_database", function(req,res) {
+        client.query("SELECT * FROM object_table;", (err, result) => {
+           if (err) {res.send("db err")}
+           res.send(result);
+        });
+    });
+
     app.get("/", function (req, res) {
         res.render("homepage.hbs");
     });
