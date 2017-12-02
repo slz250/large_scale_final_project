@@ -2,7 +2,7 @@
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 //CHANGE BELOW INTO POSTGRES
-var User            = require('../app/models/user');
+// var User            = require('../app/models/user');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -77,7 +77,6 @@ module.exports = function(passport) {
 
     }));
 
-
     // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
@@ -112,7 +111,5 @@ module.exports = function(passport) {
         });
 
     }));
-
-};
 
 };
