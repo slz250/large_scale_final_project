@@ -3,6 +3,14 @@ module.exports = function (app, passport) {
         res.render("homepage.hbs");
     });
 
+    app.get("/login", function (req,res){
+      res.render("login_registration.hbs");
+    });
+
+    app.post("/login", function (req,res){
+
+    });
+
     app.get("/:userID", (req, res) => {
         const item_list = null;
         res.render("item_list.hbs", {item_list: item_list});
