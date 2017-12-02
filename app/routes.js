@@ -1,3 +1,4 @@
+
 module.exports = function (app, passport) {
     app.get("/", function (req, res) {
         res.render("homepage.hbs");
@@ -26,7 +27,19 @@ module.exports = function (app, passport) {
 
     app.get("/:userID", (req, res) => {
         const item_list = null;
+
+
+
+
+
+
+
         res.render("item_list.hbs", {item_list: item_list});
+
+
+
+
+
     });
 
     const user = "owner";
