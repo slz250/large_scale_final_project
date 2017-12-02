@@ -7,6 +7,7 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const session      = require('express-session');
+const path         = require('path');
 const pg = require('pg')
 
 // connection with Database
