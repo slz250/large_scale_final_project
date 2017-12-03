@@ -40,14 +40,30 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', function(req,res){
+      let firstName = req.body.first_name,
+          lastName = req.body.last_name,
+          email = req.body.email,
+          password = req.body.password,
+          username = req.body.username,
+          id = 1234567890
 
-      let firstName = req.body.firstname;
-      passport.authenticate('local-registration',function(err, user, message) {
-          successRedirect: '/:user_id', // redirect to the secure profile section
-          failureRedirect: '/registration', // redirect back to the signup page if there is an error
-          failureFlash: true
-      }));
+      bcrypt.hash(password, 10, function(err, hash) {
+        if(err){
+          console.log('error hashing')
+          console.log(err)
+        }else{
+          db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
+            if(err){
+              console.log('Sign up unsuccessfull')
+              console.log(err)
+            }else{
+              console.log('Sign up successfull')
+            }
+          })
+        }
+      })
     }
+
 
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
