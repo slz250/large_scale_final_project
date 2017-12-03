@@ -1,30 +1,21 @@
 /**
  * Here we are connecting to the db
  */
-const { Pool, Client } = require('pg');
-// connection with Database
-const user = "admin";
-const pw = "12345";
-
-const connectionString = "postgresql://" + user + ":" + pw + "@localhost/largeScaleDB";
-
-const client = new Client({
-    connectionString: connectionString,
-});
-client.connect();
+const db = require('../db')
 
 module.exports = function (app, passport) {
     /**
      * testing the database
      */
     app.get("/test_database", function(req,res) {
-        client.query("SELECT * FROM user_table;", (err, result) => {
+        db.query("SELECT * FROM user_table;", (err, result) => {
            if (err) {
              console.log(err)
              res.send("db err")
             } else{
               //res.send(result.rows)
               res.json(result.rows)
+              console.log("still works")
               //console.log(results)
             }
         });
@@ -39,7 +30,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/:userID', // redirect to the secure profile section
+        successRedirect : '/:user_id', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
 
@@ -51,21 +42,21 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', passport.authenticate('local-registration', {
-        successRedirect : '/:userID', // redirect to the secure profile section
+        successRedirect : '/:user_id', // redirect to the secure profile section
         failureRedirect : '/registration', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash
 
 
     }));
 
-    //HOW TO GET USERID ?! 
-    app.get("/:userID", (req, res) => {
+    //HOW TO GET user_id ?!
+    app.get("/:user_id", (req, res) => {
       let item_list = null;
       const query = {
-        text: "SELECT * FROM object_table where userID = $1::text",
-        values: [userID]
+        text: "SELECT * FROM object_table where user_id = $1::text",
+        values: [user_id]
       };
-        client.query(query, (err, result) => {
+        db.query(query, (err, result) => {
            if (err) {
              console.log(err)
              res.send("db err")
@@ -79,7 +70,7 @@ module.exports = function (app, passport) {
     });
 
     const user = "owner";
-    app.get("/:userID/:itemID", (req, res) => {
+    app.get("/:user_id/:object_id", (req, res) => {
         const item = {name: "iPhone X", status: "In-Possession"};
         //pseudo-code
         if (user === "owner") {
@@ -90,7 +81,7 @@ module.exports = function (app, passport) {
 
     });
 
-    app.post("/:userID/:itemID", (req, res) => {
+    app.post("/:user_id/:object_id", (req, res) => {
         if (Object.keys(req.body).length !== 0) {
             console.log(req.body.textbox);
         }

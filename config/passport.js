@@ -20,9 +20,14 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
+      db.query('SELECT id, username, type FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
+          if(err) {
+            winston.error('Error when selecting user on session deserialize', err)
+            return cb(err)
+          }
+
+          cb(null, results.rows[0])
+        })
     });
 
     // =========================================================================
