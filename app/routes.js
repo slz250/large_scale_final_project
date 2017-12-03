@@ -40,12 +40,12 @@ module.exports = function (app, passport) {
 
     app.post('/registration', function(req,res){
 
-      passport.authenticate('local-registration',function(err, user, message) {
-          successRedirect : '/:user_id', // redirect to the secure profile section
-          failureRedirect : '/registration', // redirect back to the signup page if there is an error
-          failureFlash : true
-      }));
-    }
+      passport.authenticate('local-registration', {
+          successRedirect: '/:user_id', // redirect to the secure profile section
+          failureRedirect: '/registration', // redirect back to the signup page if there is an error
+          failureFlash: true
+      })
+    });
 
 
     //HOW TO GET user_id ?!
@@ -72,6 +72,10 @@ module.exports = function (app, passport) {
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
+        /**
+         * first get user then get object
+         * @type {{name: string, status: string}}
+         */
         const item = {name: "iPhone X", status: "In-Possession"};
         //pseudo-code
         if (user === "owner") {

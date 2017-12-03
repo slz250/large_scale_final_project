@@ -1,9 +1,10 @@
-const { Pool, Client } = require('pg')
+const { Pool, Client } = require('pg');
 
 const user = "admin";
 const pw = "12345";
+const dbName = "largeScaleDB";
 
-const connectionString = "postgresql://" + user + ":" + pw + "@localhost/largeScaleDB";
+const connectionString = "postgresql://" + user + ":" + pw + "@localhost/" + dbName;
 
 const client = new Client({
     connectionString: connectionString
@@ -18,4 +19,4 @@ const pool = new Pool({
 
 module.exports = {
   query: (text, params) => pool.query(text, params)
-}
+};
