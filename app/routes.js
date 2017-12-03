@@ -39,24 +39,14 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', function(req,res){
-<<<<<<< HEAD
-      let firstName = req.body.
-      passport.authenticate('local-registration',function(err, user, message) {
-          successRedirect : '/:user_id', // redirect to the secure profile section
-          failureRedirect : '/registration', // redirect back to the signup page if there is an error
-          failureFlash : true
-      }));
-    }
-=======
 
-      passport.authenticate('local-registration', {
+      let firstName = req.body.firstname;
+      passport.authenticate('local-registration',function(err, user, message) {
           successRedirect: '/:user_id', // redirect to the secure profile section
           failureRedirect: '/registration', // redirect back to the signup page if there is an error
           failureFlash: true
-      })
-    });
->>>>>>> 7d0164f7cae0438694b8a455505a6bf7e2d45476
-
+      }));
+    }
 
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
