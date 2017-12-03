@@ -19,24 +19,24 @@ module.exports = function (passport) {
         })
     });
 
-<<<<<<< HEAD
-    passport.use('local-login',new LocalStrategy({
+    passport.use('user',new LocalStrategy({
       usernameField : 'email',
       passwordField : 'password',
-      passReqToCallback : true
       },
-      (req, user, done) => {
-        db.query('SELECT user_id, username, password FROM user_table WHERE username=$1', [username], (err, result) => {
+      (username, password, done) => {
+        db.query('SELECT * FROM user_table WHERE email = $1', [email], (err, result) => {
           if(err) {
             console.log(err)
+            return done(err)
           }
           if(result.rows.length > 0) {
-            const first = result.rows[0]
-            bcrypt.compare(password, first.password, function(err, isMatch) {
-              if(isMatch) {
-                return done(null, { id: first.user_id, username: first.username })
-              } else {
+            const user = result.rows[0]
+            bcrypt.compare(password, user.password, function(err, isMatch) {
+              if(err) {
                 done(null, false)
+              } else {
+                return done(null, { id: user.user_id, username: user.username })
+
               }
             })
           } else {
@@ -45,85 +45,4 @@ module.exports = function (passport) {
         })
       }
     ));
-=======
-    passport.use('local-login', new LocalStrategy({
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true
-        },
-        (req, user, done) => {
-            db.query('SELECT user_id, username, password FROM user_table WHERE username=$1', [username], (err, result) => {
-                    if (err) {
-                        console.log(err)
-                    }
-                    if (result.rows.length > 0) {
-                        const first = result.rows[0]
-                        bcrypt.compare(password, first.password, function (err, isMatch) {
-                            if (isMatch) {
-                                return done(null, {id: first.user_id, username: first.username})
-                            } else {
-                                done(null, false)
-                            }
-                        })
-                    } else {
-                        done(null, false)
-                    }
-                }
-            )
-        }
-    ));
-    // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
-
-    passport.use('local-registration', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
-
-        function (req, email, password, done) {
-
-            // asynchronous
-            // User.findOne wont fire unless data is sent back
-            process.nextTick(function () {
-
-                // find a user whose email is the same as the forms email
-                // we are checking to see if the user trying to login already exists
-                User.findOne({'local.email': email}, function (err, user) {
-                    // if there are any errors, return the error
-                    if (err)
-                        return done(err);
-
-                    // check to see if theres already a user with that email
-                    if (user) {
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } else {
-
-                        // if there is no user with that email
-                        // create the user
-                        const newUser = new User();
-
-                        // set the user's local credentials
-                        newUser.local.email = email;
-                        newUser.local.password = newUser.generateHash(password);
-
-                        // save the user
-                        newUser.save(function (err) {
-                            if (err)
-                                throw err;
-                            return done(null, newUser);
-                        });
-                    }
-
-                });
-
-            });
-
-        }
-    ))
->>>>>>> 7d0164f7cae0438694b8a455505a6bf7e2d45476
 };

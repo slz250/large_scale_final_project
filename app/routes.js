@@ -1,4 +1,5 @@
-const db = require('../db') //CONNECTION TO DATABASE FILE
+const db = require('../db')
+const bcrypt = require('bcrypt');
 module.exports = function (app, passport) {
     /**
      * testing the database
@@ -39,23 +40,29 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', function(req,res){
-<<<<<<< HEAD
-      let firstName = req.body.
-      passport.authenticate('local-registration',function(err, user, message) {
-          successRedirect : '/:user_id', // redirect to the secure profile section
-          failureRedirect : '/registration', // redirect back to the signup page if there is an error
-          failureFlash : true
-      }));
-    }
-=======
+      let firstName = req.body.first_name,
+          lastName = req.body.last_name,
+          email = req.body.email,
+          password = req.body.password,
+          username = req.body.username,
+          id = 1234567890
 
-      passport.authenticate('local-registration', {
-          successRedirect: '/:user_id', // redirect to the secure profile section
-          failureRedirect: '/registration', // redirect back to the signup page if there is an error
-          failureFlash: true
+      bcrypt.hash(password, 10, function(err, hash) {
+        if(err){
+          console.log('error hashing')
+          console.log(err)
+        }else{
+          db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
+            if(err){
+              console.log('Sign up unsuccessfull')
+              console.log(err)
+            }else{
+              console.log('Sign up successfull')
+            }
+          })
+        }
       })
-    });
->>>>>>> 7d0164f7cae0438694b8a455505a6bf7e2d45476
+    })
 
 
     //HOW TO GET user_id ?!
@@ -79,6 +86,9 @@ module.exports = function (app, passport) {
         });
         res.render("item_list.hbs", {item_list: item_list});
     });
+
+
+
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
