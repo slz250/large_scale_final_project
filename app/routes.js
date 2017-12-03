@@ -39,6 +39,15 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', function(req,res){
+<<<<<<< HEAD
+      let firstName = req.body.
+      passport.authenticate('local-registration',function(err, user, message) {
+          successRedirect : '/:user_id', // redirect to the secure profile section
+          failureRedirect : '/registration', // redirect back to the signup page if there is an error
+          failureFlash : true
+      }));
+    }
+=======
 
       passport.authenticate('local-registration', {
           successRedirect: '/:user_id', // redirect to the secure profile section
@@ -46,6 +55,7 @@ module.exports = function (app, passport) {
           failureFlash: true
       })
     });
+>>>>>>> 7d0164f7cae0438694b8a455505a6bf7e2d45476
 
 
     //HOW TO GET user_id ?!

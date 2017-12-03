@@ -19,6 +19,33 @@ module.exports = function (passport) {
         })
     });
 
+<<<<<<< HEAD
+    passport.use('local-login',new LocalStrategy({
+      usernameField : 'email',
+      passwordField : 'password',
+      passReqToCallback : true
+      },
+      (req, user, done) => {
+        db.query('SELECT user_id, username, password FROM user_table WHERE username=$1', [username], (err, result) => {
+          if(err) {
+            console.log(err)
+          }
+          if(result.rows.length > 0) {
+            const first = result.rows[0]
+            bcrypt.compare(password, first.password, function(err, isMatch) {
+              if(isMatch) {
+                return done(null, { id: first.user_id, username: first.username })
+              } else {
+                done(null, false)
+              }
+            })
+          } else {
+            done(null, false)
+          }
+        })
+      }
+    ));
+=======
     passport.use('local-login', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
@@ -98,4 +125,5 @@ module.exports = function (passport) {
 
         }
     ))
+>>>>>>> 7d0164f7cae0438694b8a455505a6bf7e2d45476
 };
