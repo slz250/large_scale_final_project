@@ -1,4 +1,5 @@
-const db = require('../db') //CONNECTION TO DATABASE FILE
+const db = require('../db')
+const bcrypt = require('bcrypt');
 module.exports = function (app, passport) {
     /**
      * testing the database
@@ -69,6 +70,9 @@ module.exports = function (app, passport) {
         });
         res.render("item_list.hbs", {item_list: item_list});
     });
+
+
+
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
