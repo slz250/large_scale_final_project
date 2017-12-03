@@ -1,0 +1,18 @@
+{{#if owner}}
+    <h1>Item Status</h1>
+    <h3>Name: {{object.name}}</h3>
+    <h3>Current Status: {{object.state}}</h3>
+
+    <form method = "post" action = "/update_status">
+        In-Possession <input type = "checkbox" name = "item_status" value = 2>
+        Found <input type = "checkbox" name = "item_status" value = 1>
+        Lost <input type = "checkbox" name = "item_status" value = 0><br><br>
+        <input type = "submit" value = "Update Status">
+    </form>
+{{else}}
+    <h1>Recover Item</h1>
+    <form method = "post" action = "">
+        <textarea name = "textbox" cols = "40" rows = "5"></textarea><br>
+        <input type = "submit" value = "Send Message">
+    </form>
+{{/if}}
