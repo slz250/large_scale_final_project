@@ -1,8 +1,4 @@
-/**
- * Here we are connecting to the db
- */
-const db = require('../db')
-
+const db = require('../db') //CONNECTION TO DATABASE FILE
 module.exports = function (app, passport) {
     /**
      * testing the database
@@ -34,6 +30,7 @@ module.exports = function (app, passport) {
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
 
+        //LOGIN and link to homepage with user_id in the link
         //get info from database ?
     }));
 
@@ -41,16 +38,20 @@ module.exports = function (app, passport) {
       res.render("registration.hbs");
     });
 
-    app.post('/registration', passport.authenticate('local-registration', {
-        successRedirect : '/:user_id', // redirect to the secure profile section
-        failureRedirect : '/registration', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash
+    app.post('/registration', function(req,res){
 
+      passport.authenticate('local-registration',function(err, user, message) {
+          successRedirect : '/:user_id', // redirect to the secure profile section
+          failureRedirect : '/registration', // redirect back to the signup page if there is an error
+          failureFlash : true
+      }));
+    }
 
-    }));
 
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
+      //  ensure authenticated
+      //  console.log('this is being run')
       let item_list = null;
       const query = {
         text: "SELECT * FROM object_table where user_id = $1::text",
