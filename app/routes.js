@@ -1,5 +1,35 @@
+/**
+ * Here we are connecting to the db
+ */
+const { Pool, Client } = require('pg');
+// connection with Database
+const user = "admin";
+const pw = "12345";
+
+const connectionString = "postgresql://" + user + ":" + pw + "@localhost/largeScaleDB";
+
+const client = new Client({
+    connectionString: connectionString,
+});
+client.connect();
 
 module.exports = function (app, passport) {
+    /**
+     * testing the database
+     */
+    app.get("/test_database", function(req,res) {
+        client.query("SELECT * FROM user_table;", (err, result) => {
+           if (err) {
+             console.log(err)
+             res.send("db err")
+            } else{
+              //res.send(result.rows)
+              res.json(result.rows)
+              //console.log(results)
+            }
+        });
+    });
+
     app.get("/", function (req, res) {
         res.render("homepage.hbs");
     });
@@ -12,6 +42,8 @@ module.exports = function (app, passport) {
         successRedirect : '/:userID', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
+
+        //get info from database ?
     }));
 
     app.get("/registration", function (req,res){
@@ -21,25 +53,29 @@ module.exports = function (app, passport) {
     app.post('/registration', passport.authenticate('local-registration', {
         successRedirect : '/:userID', // redirect to the secure profile section
         failureRedirect : '/registration', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+        failureFlash : true // allow flash
+
+
     }));
 
-
+    //HOW TO GET USERID ?! 
     app.get("/:userID", (req, res) => {
-        const item_list = null;
-
-
-
-
-
-
-
+      let item_list = null;
+      const query = {
+        text: "SELECT * FROM object_table where userID = $1::text",
+        values: [userID]
+      };
+        client.query(query, (err, result) => {
+           if (err) {
+             console.log(err)
+             res.send("db err")
+            } else{
+              //res.send(result.rows)
+              item_list = result.rows
+              //console.log(results)
+            }
+        });
         res.render("item_list.hbs", {item_list: item_list});
-
-
-
-
-
     });
 
     const user = "owner";
