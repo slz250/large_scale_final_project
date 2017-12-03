@@ -39,7 +39,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/registration', function(req,res){
-
+      let firstName = req.body.
       passport.authenticate('local-registration',function(err, user, message) {
           successRedirect : '/:user_id', // redirect to the secure profile section
           failureRedirect : '/registration', // redirect back to the signup page if there is an error
