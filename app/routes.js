@@ -69,27 +69,46 @@ module.exports = function (app, passport) {
     })
 
 
-    //HOW TO GET user_id ?!
-    app.get("/:user_id", (req, res) => {
-        let object_list = null;
-        const query = {
-            text: "SELECT * FROM object_table where user_id = $1::text",
-            values: [user_id]
-        };
+    // //HOW TO GET user_id ?!
+    // app.get("/:user_id", (req, res) => {
+    //     let object_list = null;
+    //     // const query = {
+    //     //     text: "SELECT * FROM object_table where user_id = $1::text",
+    //     //     values: ['1234567890']
+    //     // };
+    //     const query = "SELECT * FROM object_table WHERE user_id = '1234567890'"
+    //     db.query(query, (err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //             // res.send("db err")
+    //         } else {
+    //             res.json(result.rows);
+    //             //res.send(result.rows)
+    //             // object_list = result.rows
+    //             // console.log(result)
+    //
+    //         }
+    //     });
+    //     // res.render("object_list.hbs", {object_list: object_list});
+    // });
+
+    app.get("/:user_id", function (req, res) {
+        let query = "SELECT * FROM user_table WHERE user_id="
+        query = query + "'" + req.params.user_id + "'"
+        console.log(query)
         db.query(query, (err, result) => {
             if (err) {
-                console.log(err)
-                res.send("db err")
+                console.log(err);
+                res.send(err);
             } else {
                 //res.send(result.rows)
-                object_list = result.rows
+                res.json(result.rows);
+                console.log("works");
+                //res.render("object_list.hbs", {object_list: object_list});
                 //console.log(results)
             }
         });
-        res.render("object_list.hbs", {object_list: object_list});
     });
-
-
 
 
     const user = "owner";
