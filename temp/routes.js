@@ -28,26 +28,11 @@ module.exports = function (app, passport) {
         res.render("login.hbs");
     });
 
-    app.post('/login', function(req,res) {
-      console.log('test')
-      passport.authenticate('user', (err,user,message) => {
-        console.log('it gets here')
-        if(err) console.log(err)
-        else if(!user){
-          console.log('Its not the user')
-          return res.redirect('/login')
-        }else {
-          req.logIn(user, function(err){
-            if(err) console.log(err)
-            else {
-              console.log('Sign in successfull')
-              return res.redirect('/');
-            }
-          })
-        }
-      })(req,res)
-      console.log('another test')
-    })
+    app.post('/login', passport.authenticate('user', {
+        successRedirect: '/test_database', //<-DONT FORGET TO CHNAGE THIS!
+        failureRedirect: '/registration'
+
+    }));
 
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
@@ -77,8 +62,8 @@ module.exports = function (app, passport) {
               console.log(err)
             }else{
               console.log('Sign up successfull')
-              //console.log(req.user)
-              res.redirect('/login')
+              console.log(req.user)
+              res.redirect('/test_database')
             }
           })
         }
@@ -90,7 +75,7 @@ module.exports = function (app, passport) {
     app.get("/:user_id", (req, res) => {
         let object_list = null;
         const query = {
-            text: "SELECT * FROM object_table where user_id = $1",
+            text: "SELECT * FROM object_table where user_id = $1::text",
             values: [user_id]
         };
         db.query(query, (err, result) => {
