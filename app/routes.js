@@ -98,7 +98,6 @@ module.exports = function (app, passport) {
                 console.log(err);
                 res.send(err);
             } else {
-
                 let obj_query = {
                   text: 'SELECT name FROM object_table WHERE user_id = $1',
                   values:[userID]
@@ -126,7 +125,7 @@ module.exports = function (app, passport) {
     });
 
     app.post("/add_new_item", (req,res) => {
-
+        console.log("works")
     });
 
     const user = "owner";
