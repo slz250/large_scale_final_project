@@ -28,16 +28,6 @@ module.exports = function (app, passport) {
         res.render("login.hbs");
     });
 
-<<<<<<< HEAD
-    app.post('/login', passport.authenticate('user', {
-        successRedirect: '/:user_id', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-
-        //LOGIN and link to homepage with user_id in the link
-        //get info from database ?
-    }));
-=======
     app.post('/login', function(req,res) {
       console.log('test')
       passport.authenticate('user', (err,user,message) => {
@@ -58,7 +48,6 @@ module.exports = function (app, passport) {
       })(req,res)
       console.log('another test')
     })
->>>>>>> cecf50aa63b548f3cfc0f4960f24cf79d448974e
 
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
@@ -181,9 +170,9 @@ module.exports = function (app, passport) {
         }
     });
 
-    app.get('/mypenis', (req, res) => {
-        console.log(req.user);
-        res.render('homepage.hbs')
+    app.get('/logout', function(req, res){
+      req.logout();
+      res.redirect('/');
     });
 
 };
