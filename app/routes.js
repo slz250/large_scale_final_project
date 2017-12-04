@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = uuidv4()
+          id = db.query("CREATE OR REPLACE FUNCTION shard_1.id_generator(OUT result bigint) AS $$ DECLARE our_epoch bigint := 1314220021721; seq_id bigint; now_millis bigint; shard_id int := 1; BEGIN SELECT nextval('shard_1.global_id_sequence') % 1024 INTO seq_id; SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis; result := (now_millis - our_epoch) << 23; result := result | (shard_id << 10); result := result | (seq_id); END; $$ LANGUAGE PLPGSQ select shard_1.id_generator(); ");
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -70,28 +70,6 @@ module.exports = function (app, passport) {
 
 
     //HOW TO GET user_id ?!
-<<<<<<< HEAD
-    // app.get("/:user_id", (req, res) => {
-    //     //  ensure authenticated
-    //     //  console.log('this is being run')
-    //     let object_list = null;
-    //     const query = {
-    //         text: "SELECT * FROM object_table where user_id = $1::text",
-    //         values: [user_id]
-    //     };
-    //     db.query(query, (err, result) => {
-    //         if (err) {
-    //             console.log(err)
-    //             res.send("db err")
-    //         } else {
-    //             //res.send(result.rows)
-    //             object_list = result.rows
-    //             //console.log(results)
-    //         }
-    //     });
-    //     res.render("object_list.hbs", {object_list: object_list});
-    // });
-=======
     app.get("/:user_id", (req, res) => {
         let object_list = null;
         const query = {
@@ -110,7 +88,6 @@ module.exports = function (app, passport) {
         });
         res.render("object_list.hbs", {object_list: object_list});
     });
->>>>>>> a893a7c9189622d2c358fb4bec8dbbfca1b1fcda
 
 
 
