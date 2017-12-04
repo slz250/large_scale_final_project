@@ -62,7 +62,7 @@ module.exports = function (app, passport) {
           })
         }
       })
-    }
+    })
 
 
     //HOW TO GET user_id ?!
