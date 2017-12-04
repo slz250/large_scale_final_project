@@ -29,14 +29,26 @@ module.exports = function (app, passport) {
         res.render("login.hbs");
     });
 
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/user_id', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-
-        //LOGIN and link to homepage with user_id in the link
-        //get info from database ?
-    }));
+    app.post('/login', function(req,res) {
+      console.log('test')
+      passport.authenticate('user', (err,user,message) => {
+        console.log('it gets here')
+        if(err) console.log(err)
+        else if(!user){
+          console.log('Its not the user')
+          return res.redirect('/login')
+        }else {
+          req.logIn(user, function(err){
+            if(err) console.log(err)
+            else {
+              console.log('Sign in successfull')
+              return res.redirect('/');
+            }
+          })
+        }
+      })(req,res)
+      console.log('another test')
+    })
 
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
@@ -55,14 +67,19 @@ module.exports = function (app, passport) {
           console.log('error hashing');
           console.log(err);
         }else{
-          db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
+          let query = {
+            text:'INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )',
+            values: [id, firstName, lastName, email, username, hash]
+          }
+          db.query(query, (err,result) => {
             console.log('it gets here')
             if(err){
               console.log('Sign up unsuccessful');
               console.log(err);
             }else{
-              console.log('Sign up successful')
-              res.redirect("/test");
+              console.log('Sign up successfull')
+              //console.log(req.user)
+              res.redirect('/login')
             }
           })
         }
