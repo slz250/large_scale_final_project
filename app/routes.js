@@ -41,7 +41,7 @@ module.exports = function (app, passport) {
             if(err) console.log(err)
             else {
               console.log('Sign in successfull')
-              return res.redirect('/');
+              return res.redirect('/' + user.user_id);
             }
           })
         }
@@ -85,39 +85,8 @@ module.exports = function (app, passport) {
       })
     });
 
-
-    /**
-     * have profile page be "/userid"
-     * with link to direct to list of items
-     *
-     * within list of item direct to "/userid/obj_id"
-     */
-    //HOW TO GET user_id ?!
-    // //HOW TO GET user_id ?!
-    // app.get("/:user_id", (req, res) => {
-    //     let object_list = null;
-    //     // const query = {
-    //     //     text: "SELECT * FROM object_table where user_id = $1::text",
-    //     //     values: ['1234567890']
-    //     // };
-    //     const query = "SELECT * FROM object_table WHERE user_id = '1234567890'"
-    //     db.query(query, (err, result) => {
-    //         if (err) {
-    //             console.log(err)
-    //             // res.send("db err")
-    //         } else {
-    //             res.json(result.rows);
-    //             //res.send(result.rows)
-    //             // object_list = result.rows
-    //             // console.log(result)
-    //
-    //         }
-    //     });
-    //     // res.render("object_list.hbs", {object_list: object_list});
-    // });
-
     //assumes user_id data type is text instead of an int
-    app.get("/:user_id", function (req, res) {
+    app.get("/:user_id", checkLoggedIn, function (req, res) {
         let query = "SELECT * FROM user_table WHERE user_id=";
         query = query + "'" + req.params.user_id + "'";
         // console.log(query);
@@ -205,3 +174,11 @@ module.exports = function (app, passport) {
         }
     });
 };
+
+function checkLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/");
+    }
+}
