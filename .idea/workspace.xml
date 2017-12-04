@@ -2,12 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54530be2-066f-425e-951e-b704d602e6fd" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-grid.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-grid.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-grid.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-grid.min.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-reboot.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-reboot.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-reboot.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap-reboot.min.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap.min.css.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.bundle.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.bundle.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.bundle.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.bundle.min.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bootstrap/js/bootstrap.min.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layout.hbs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.js" afterPath="$PROJECT_DIR$/app/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appServer.js" afterPath="$PROJECT_DIR$/appServer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/passport.js" afterPath="$PROJECT_DIR$/config/passport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/item_list.hbs" afterPath="$PROJECT_DIR$/views/item_list.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/registration.hbs" afterPath="$PROJECT_DIR$/views/registration.hbs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/homepage.hbs" afterPath="$PROJECT_DIR$/views/homepage.hbs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,51 +40,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="routes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="975">
-              <caret line="65" column="6" lean-forward="false" selection-start-line="65" selection-start-column="6" selection-end-line="65" selection-end-column="6" />
+            <state relative-caret-position="806">
+              <caret line="65" column="7" lean-forward="false" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="recover_object.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/recover_object.hbs">
+      <file leaf-file-name="homepage.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/homepage.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="71" lean-forward="false" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/layout.hbs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="8" column="68" lean-forward="false" selection-start-line="8" selection-start-column="68" selection-end-line="8" selection-end-column="68" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="appServer.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/appServer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="37" lean-forward="true" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="passport.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/passport.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-14">
-              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <caret line="8" column="47" lean-forward="false" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -87,17 +86,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/homepage.hbs" />
         <option value="$PROJECT_DIR$/views/item_list.hbs" />
         <option value="$PROJECT_DIR$/config/database.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/views/recover_item.hbs" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/appServer.js" />
         <option value="$PROJECT_DIR$/config/passport.js" />
         <option value="$PROJECT_DIR$/db/index.js" />
         <option value="$PROJECT_DIR$/views/recover_object.hbs" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/routes.js" />
+        <option value="$PROJECT_DIR$/views/layout.hbs" />
+        <option value="$PROJECT_DIR$/views/homepage.hbs" />
       </list>
     </option>
   </component>
@@ -162,6 +162,17 @@
             <path>
               <item name="large_scale_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="large_scale_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="large_scale_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="large_scale_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="large_scale_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="large_scale_final_project" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -213,18 +224,18 @@
       <option name="presentableId" value="Default" />
       <updated>1510891373410</updated>
       <workItem from="1510891374698" duration="4389000" />
-      <workItem from="1511323685103" duration="11749000" />
+      <workItem from="1511323685103" duration="13360000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16138000" />
+    <option name="totallyTimeSpent" value="17749000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="608" y="0" width="672" height="800" extended-state="0" />
+    <frame x="563" y="0" width="717" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12053572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19804741" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -340,50 +351,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/item_list.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/homepage.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="26" lean-forward="false" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="12" lean-forward="false" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/recover_object.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="68" lean-forward="false" selection-start-line="8" selection-start-column="68" selection-end-line="8" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="65" column="6" lean-forward="false" selection-start-line="65" selection-start-column="6" selection-end-line="65" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -396,10 +367,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/index.js">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        <state relative-caret-position="45">
+          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -408,6 +379,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="37" lean-forward="true" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/item_list.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/recover_object.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="68" lean-forward="false" selection-start-line="8" selection-start-column="68" selection-end-line="8" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layout.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="47" lean-forward="false" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bootstrap/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/homepage.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="71" lean-forward="false" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="65" column="7" lean-forward="false" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
           <folding />
         </state>
       </provider>

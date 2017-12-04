@@ -50,22 +50,28 @@ module.exports = function (app, passport) {
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
-          console.log('error hashing')
-          console.log(err)
+          console.log('error hashing');
+          console.log(err);
         }else{
           db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
             if(err){
-              console.log('Sign up unsuccessfull')
-              console.log(err)
+              console.log('Sign up unsuccessful');
+              console.log(err);
             }else{
-              console.log('Sign up successfull')
+              console.log('Sign up successful');
             }
           })
         }
       })
-    })
+    });
 
 
+    /**
+     * have profile page be "/userid"
+     * with link to direct to list of items
+     *
+     * within list of item direct to "/userid/obj_id"
+     */
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
         //  ensure authenticated
@@ -115,13 +121,15 @@ module.exports = function (app, passport) {
 
     app.post("/update_status", (req,res) => {
         // res.send(req.body.item_status);
-        const status = parseInt(req.body.item_status);
-        db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err,result) => {
-            if (err) {
-                res.send(err);
-            }
-            res.redirect("/userid/12032017");
-        });
+        if (Object.keys(req.body).length !== 0) {
+            const status = parseInt(req.body.item_status);
+            db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+                if (err) {
+                    res.send(err);
+                }
+                res.redirect("/userid/12032017");
+            });
+        }
     });
 
     app.post("/:user_id/:object_id", (req, res) => {
