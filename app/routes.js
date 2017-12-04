@@ -1,5 +1,6 @@
 const db = require('../db')
 const bcrypt = require('bcrypt');
+const uuidv4 = require('uuid/v4');
 
 module.exports = function (app, passport) {
     /**
@@ -46,7 +47,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = 1234567890
+          id = uuidv4();
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
