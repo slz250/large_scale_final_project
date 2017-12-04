@@ -92,19 +92,27 @@ module.exports = function (app, passport) {
     //     // res.render("object_list.hbs", {object_list: object_list});
     // });
 
+    //assumes user_id data type is text instead of an int
     app.get("/:user_id", function (req, res) {
-        let query = "SELECT * FROM user_table WHERE user_id="
-        query = query + "'" + req.params.user_id + "'"
-        console.log(query)
+        let query = "SELECT * FROM user_table WHERE user_id=";
+        query = query + "'" + req.params.user_id + "'";
+        // console.log(query);
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
                 res.send(err);
             } else {
-                //res.send(result.rows)
-                res.json(result.rows);
-                console.log("works");
-                //res.render("object_list.hbs", {object_list: object_list});
+                //res.send(result.row)
+                // res.json(result.rows);
+                res.render('homepage',
+                {'user_id':result.rows[0].user_id,
+                'first_name':result.rows[0].first_name,
+                'last_name':result.rows[0].last_name,
+                'email':result.rows[0].email,
+                'username':result.rows[0].username,
+                'password':result.rows[0].password,
+                });
+                console.log(result.rows[0]);
                 //console.log(results)
             }
         });
