@@ -24,26 +24,7 @@ module.exports = function (passport) {
             }
         })
     });
-    // passport.use(new LocalStrategy(
-    //   function(username, password, done) {
-    //     db.query('SELECT * FROM user_table WHERE username = $1', [username], (err, result) => {
-    //       if(err) return done(err)
-    //       else{
-    //         if(result.rows.length > 0) {
-    //           const user = results.rows[0]
-    //           bcrypt.compare(password, user.password, function(err,isMatch){
-    //             if(err) return err
-    //             else if(isMAtch){
-    //               return done(null, user)
-    //             }else {
-    //               return done(null, false, { error: "Incorrect Password"})
-    //             }
-    //           })
-    //         }
-    //       }
-    //     })
-    //   }))
-
+    
     passport.use('user',new LocalStrategy({
       usernameField : 'username',
       passwordField : 'password',
