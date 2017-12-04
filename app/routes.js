@@ -21,7 +21,7 @@ module.exports = function (app, passport) {
     });
 
     app.get("/", function (req, res) {
-        res.render("homepage.hbs");
+        res.render("index.hbs");
     });
 
     app.get("/login", function (req, res) {
@@ -59,12 +59,13 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
+          // id = uuidv4();
           id = db.query("CREATE OR REPLACE FUNCTION shard_1.id_generator(OUT result bigint) AS $$ DECLARE our_epoch bigint := 1314220021721; seq_id bigint; now_millis bigint; shard_id int := 1; BEGIN SELECT nextval('shard_1.global_id_sequence') % 1024 INTO seq_id; SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis; result := (now_millis - our_epoch) << 23; result := result | (shard_id << 10); result := result | (seq_id); END; $$ LANGUAGE PLPGSQ select shard_1.id_generator(); ");
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
-          console.log('error hashing')
-          console.log(err)
+          console.log('error hashing');
+          console.log(err);
         }else{
           let query = {
             text:'INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )',
@@ -73,8 +74,8 @@ module.exports = function (app, passport) {
           db.query(query, (err,result) => {
             console.log('it gets here')
             if(err){
-              console.log('Sign up unsuccessfull')
-              console.log(err)
+              console.log('Sign up unsuccessful');
+              console.log(err);
             }else{
               console.log('Sign up successfull')
               //console.log(req.user)
@@ -83,11 +84,10 @@ module.exports = function (app, passport) {
           })
         }
       })
-    })
-
+    });
 
     //assumes user_id data type is text instead of an int
-    app.get("/:user_id", function (req, res) {
+    app.get("/:user_id", checkLoggedIn, function (req, res) {
         let query = "SELECT * FROM user_table WHERE user_id=";
         query = query + "'" + req.params.user_id + "'";
         // console.log(query);
@@ -130,6 +130,9 @@ module.exports = function (app, passport) {
         });
     });
 
+    app.post("/add_new_item", (req,res) => {
+
+    });
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
@@ -155,13 +158,15 @@ module.exports = function (app, passport) {
 
     app.post("/update_status", (req,res) => {
         // res.send(req.body.item_status);
-        const status = parseInt(req.body.item_status);
-        db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err,result) => {
-            if (err) {
-                res.send(err);
-            }
-            res.redirect("/userid/12032017");
-        });
+        if (Object.keys(req.body).length !== 0) {
+            const status = parseInt(req.body.item_status);
+            db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+                if (err) {
+                    res.send(err);
+                }
+                res.redirect("/userid/12032017");
+            });
+        }
     });
 
     app.post("/:user_id/:object_id", (req, res) => {
@@ -176,3 +181,11 @@ module.exports = function (app, passport) {
     });
 
 };
+
+function checkLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/");
+    }
+}
