@@ -104,17 +104,33 @@ module.exports = function (app, passport) {
             } else {
                 //res.send(result.row)
                 // res.json(result.rows);
-                res.render('homepage',
-                {'user_id':result.rows[0].user_id,
-                'first_name':result.rows[0].first_name,
-                'last_name':result.rows[0].last_name,
-                'email':result.rows[0].email,
-                'username':result.rows[0].username,
-                'password':result.rows[0].password,
+                let obj_query = 'SELECT name FROM object_table WHERE user_id=';
+                obj_query = obj_query + "'" + result.rows[0].user_id + "'";
+                console.log(obj_query);
+                db.query(obj_query, (error, obj_result) => {
+                  if (error) {
+                    console.log(error);
+                    res.send(error);
+                  } else {
+                    // console.log(obj_result.rows)
+                    // console.log('done')
+                    res.render('homepage',
+                    {'user_id':result.rows[0].user_id,
+                    'first_name':result.rows[0].first_name,
+                    'last_name':result.rows[0].last_name,
+                    'email':result.rows[0].email,
+                    'username':result.rows[0].username,
+                    'password':result.rows[0].password,
+                    'objects':obj_result.rows
+                    });
+                  }
                 });
                 //get list of objects that belong to this user.
                 //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
-                console.log(result.rows[0]);
+
+
+
+                // console.log(result.rows[0]);
                 //console.log(results)
             }
         });

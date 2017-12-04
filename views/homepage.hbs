@@ -21,9 +21,11 @@
       <p>username: {{username}}</p>
       <p>password: {{password}}</p>
       <h2>Your list of objects</h2>
-      <p>object 1</p>
-      <p>object 2</p>
-      <p>object 3</p>
+      <ul>
+        {{#each objects}}
+          <li>{{this.name}}</li>
+        {{/each}}
+      </ul>
       <button type="submit" class="btn btn-default btn-lg">add item</button>
       <button type="submit" class="btn btn-default btn-lg">logout</button>
     </body>
