@@ -9,17 +9,7 @@ const bodyParser   = require('body-parser');
 const session      = require('express-session');
 const path         = require('path');
 
-/**
- * DON'T DO CONNECTION HERE
- */
-// // const pg = require('pg');
-// const { Pool, Client } = require('pg');
-// //
-// // connection with Database
-// const connectionString = "postgres://admin:12345@localhost/largeScaleDB";
-// const client = new Client({
-//     connectionString: connectionString,
-// });
+
 
 require('./config/passport')(passport); // pass passport for configuration
 

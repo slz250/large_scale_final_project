@@ -7,8 +7,10 @@ Routine Name: <input type="text" name="title"/>
 </form>
 
 <div>
-	{{#each item}}
-    <h2> <a href="http://localhost:3000/{{this.user_id}}">{{this.user_id}}</a></h2>
+	{{#each item_list}}
+    {{#each this.object}}
+      <h2> <a href="http://localhost:3000/{{this.user_id}}">{{this.user_id}}</a></h2>
+    {{/each}}
 	{{/each}}
 </form>
 </div>
