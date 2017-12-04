@@ -6,6 +6,7 @@ module.exports = function (app, passport) {
     /**
      * testing the database
      */
+    app.get()
     app.get("/test_database", function (req, res) {
         db.query("SELECT * FROM user_table;", (err, result) => {
             if (err) {
@@ -29,7 +30,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/:user_id', // redirect to the secure profile section
+        successRedirect: '/user_id', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
 
@@ -47,7 +48,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = uuidv4()
+          id = uuidv4();
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -60,8 +61,8 @@ module.exports = function (app, passport) {
               console.log('Sign up unsuccessful');
               console.log(err);
             }else{
-              console.log('Sign up successfull')
-              res.redirect("/test_database");
+              console.log('Sign up successful')
+              res.redirect("/test");
             }
           })
         }
@@ -77,6 +78,7 @@ module.exports = function (app, passport) {
      */
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
+        const user_id = "1234567890"
         let object_list = null;
         const query = {
             text: "SELECT * FROM object_table where user_id = $1::text",
@@ -92,9 +94,12 @@ module.exports = function (app, passport) {
                 //console.log(results)
             }
         });
-        res.render("object_list.hbs", {object_list: object_list});
+        res.render("item_list.hbs", {object_list: object_list});
     });
 
+    app.post("/add_new_item", (req,res) => {
+
+    });
 
 
 
