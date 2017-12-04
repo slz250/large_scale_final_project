@@ -11,30 +11,23 @@ module.exports = function (passport) {
     });
 
     passport.deserializeUser(function (user_id, done) {
-        let query = {
-          text: 'SELECT user_id, username FROM user_table WHERE user_id = $1',
-          values: [user_id]
-        }
-        db.query(query ,(err, results) => {
+        db.query('SELECT user_id, username FROM users WHERE user_id = $1', [user_id], (err, results) => {
             if (err) {
                 return done(err)
             }else{
-              let user = results.rows[0]
+              let user = result.rows[0]
               done(null, user)
             }
         })
     });
-    
+
     passport.use('user',new LocalStrategy({
       usernameField : 'username',
       passwordField : 'password',
       },
       (username, password, done) => {
-        let query = {
-          text:'SELECT * FROM user_table WHERE username = $1',
-          values: [username]
-        }
-        db.query(query, (err, result) => {
+        console.log(username, password)
+        db.query('SELECT * FROM user_table WHERE username = $1', [username], (err, result) => {
           if(err) {
             console.log(err)
             return done(err)
@@ -43,14 +36,10 @@ module.exports = function (passport) {
             const user = result.rows[0]
             bcrypt.compare(password, user.password, function(err, isMatch) {
               if(err) {
-                console.log(err)
-                done(null, err)
-              } else if (isMatch){
-                console.log("its gonna return a user")
+                console.log('Not a Match')
+                done(null, false)
+              } else {
                 return done(null, user)
-              } else{
-                console.log('wrong password')
-                return done(null, false)
               }
             })
           } else {

@@ -28,37 +28,11 @@ module.exports = function (app, passport) {
         res.render("login.hbs");
     });
 
-<<<<<<< HEAD
     app.post('/login', passport.authenticate('user', {
-        successRedirect: '/:user_id', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
+        successRedirect: '/test_database', //<-DONT FORGET TO CHNAGE THIS!
+        failureRedirect: '/registration'
 
-        //LOGIN and link to homepage with user_id in the link
-        //get info from database ?
     }));
-=======
-    app.post('/login', function(req,res) {
-      console.log('test')
-      passport.authenticate('user', (err,user,message) => {
-        console.log('it gets here')
-        if(err) console.log(err)
-        else if(!user){
-          console.log('Its not the user')
-          return res.redirect('/login')
-        }else {
-          req.logIn(user, function(err){
-            if(err) console.log(err)
-            else {
-              console.log('Sign in successfull')
-              return res.redirect('/' + user.user_id);
-            }
-          })
-        }
-      })(req,res)
-      console.log('another test')
-    })
->>>>>>> cecf50aa63b548f3cfc0f4960f24cf79d448974e
 
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
@@ -70,7 +44,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = db.query("CREATE OR REPLACE FUNCTION shard_1.id_generator(OUT result bigint) AS $$ DECLARE our_epoch bigint := 1314220021721; seq_id bigint; now_millis bigint; shard_id int := 1; BEGIN SELECT nextval('shard_1.global_id_sequence') % 1024 INTO seq_id; SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis; result := (now_millis - our_epoch) << 23; result := result | (shard_id << 10); result := result | (seq_id); END; $$ LANGUAGE PLPGSQ select shard_1.id_generator(); ");
+          id = uuidv4()
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -88,8 +62,8 @@ module.exports = function (app, passport) {
               console.log(err)
             }else{
               console.log('Sign up successfull')
-              //console.log(req.user)
-              res.redirect('/login')
+              console.log(req.user)
+              res.redirect('/test_database')
             }
           })
         }
@@ -97,49 +71,27 @@ module.exports = function (app, passport) {
     })
 
 
-    //assumes user_id data type is text instead of an int
-    app.get("/:user_id", function (req, res) {
-        let query = "SELECT * FROM user_table WHERE user_id=";
-        query = query + "'" + req.params.user_id + "'";
-        // console.log(query);
+    //HOW TO GET user_id ?!
+    app.get("/:user_id", (req, res) => {
+        let object_list = null;
+        const query = {
+            text: "SELECT * FROM object_table where user_id = $1::text",
+            values: [user_id]
+        };
         db.query(query, (err, result) => {
             if (err) {
-                console.log(err);
-                res.send(err);
+                console.log(err)
+                res.send("db err")
             } else {
-                //res.send(result.row)
-                // res.json(result.rows);
-                let obj_query = 'SELECT name FROM object_table WHERE user_id=';
-                obj_query = obj_query + "'" + result.rows[0].user_id + "'";
-                console.log(obj_query);
-                db.query(obj_query, (error, obj_result) => {
-                  if (error) {
-                    console.log(error);
-                    res.send(error);
-                  } else {
-                    // console.log(obj_result.rows)
-                    // console.log('done')
-                    res.render('homepage',
-                    {'user_id':result.rows[0].user_id,
-                    'first_name':result.rows[0].first_name,
-                    'last_name':result.rows[0].last_name,
-                    'email':result.rows[0].email,
-                    'username':result.rows[0].username,
-                    'password':result.rows[0].password,
-                    'objects':obj_result.rows
-                    });
-                  }
-                });
-                //get list of objects that belong to this user.
-                //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
-
-
-
-                // console.log(result.rows[0]);
+                //res.send(result.rows)
+                object_list = result.rows
                 //console.log(results)
             }
         });
+        res.render("object_list.hbs", {object_list: object_list});
     });
+
+
 
 
     const user = "owner";
@@ -180,10 +132,4 @@ module.exports = function (app, passport) {
             console.log(req.body.textbox);
         }
     });
-
-    app.get('/mypenis', (req, res) => {
-        console.log(req.user);
-        res.render('homepage.hbs')
-    });
-
 };

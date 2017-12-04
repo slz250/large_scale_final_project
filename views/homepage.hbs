@@ -14,16 +14,20 @@
     </header>
     <body>
       <h2>User Information</h2>
-      <p>user_id: {{user_id}}</p>
-      <p>first_name: {{first_name}}</p>
-      <p>last_name: {{last_name}}</p>
-      <p>email: {{email}}</p>
-      <p>username: {{username}}</p>
-      <p>password: {{password}}</p>
+      <ul>
+        <li>user_id: {{user_id}}</li>
+        <li>first_name: {{first_name}}</li>
+        <li>last_name: {{last_name}}</li>
+        <li>email: {{email}}</li>
+        <li>username: {{username}}</li>
+        <li>password: {{password}}</li>
+      </ul>
       <h2>Your list of objects</h2>
-      <p>object 1</p>
-      <p>object 2</p>
-      <p>object 3</p>
+      <ul>
+        {{#each objects}}
+          <li>{{this.name}}</li>
+        {{/each}}
+      </ul>
       <button type="submit" class="btn btn-default btn-lg">add item</button>
       <button type="submit" class="btn btn-default btn-lg">logout</button>
     </body>
