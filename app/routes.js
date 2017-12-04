@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = uuidv4();
+          id = uuidv4()
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -60,6 +60,7 @@ module.exports = function (app, passport) {
               console.log(err)
             }else{
               console.log('Sign up successfull')
+              res.redirect("/test_database");
             }
           })
         }
@@ -69,8 +70,6 @@ module.exports = function (app, passport) {
 
     //HOW TO GET user_id ?!
     app.get("/:user_id", (req, res) => {
-        //  ensure authenticated
-        //  console.log('this is being run')
         let object_list = null;
         const query = {
             text: "SELECT * FROM object_table where user_id = $1::text",
