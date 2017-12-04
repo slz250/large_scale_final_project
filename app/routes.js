@@ -28,7 +28,7 @@ module.exports = function (app, passport) {
         res.render("login.hbs");
     });
 
-    app.post('/login', passport.authenticate('local-login', {
+    app.post('/login', passport.authenticate('user', {
         successRedirect: '/:user_id', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
@@ -68,26 +68,26 @@ module.exports = function (app, passport) {
 
 
     //HOW TO GET user_id ?!
-    app.get("/:user_id", (req, res) => {
-        //  ensure authenticated
-        //  console.log('this is being run')
-        let object_list = null;
-        const query = {
-            text: "SELECT * FROM object_table where user_id = $1::text",
-            values: [user_id]
-        };
-        db.query(query, (err, result) => {
-            if (err) {
-                console.log(err)
-                res.send("db err")
-            } else {
-                //res.send(result.rows)
-                object_list = result.rows
-                //console.log(results)
-            }
-        });
-        res.render("object_list.hbs", {object_list: object_list});
-    });
+    // app.get("/:user_id", (req, res) => {
+    //     //  ensure authenticated
+    //     //  console.log('this is being run')
+    //     let object_list = null;
+    //     const query = {
+    //         text: "SELECT * FROM object_table where user_id = $1::text",
+    //         values: [user_id]
+    //     };
+    //     db.query(query, (err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //             res.send("db err")
+    //         } else {
+    //             //res.send(result.rows)
+    //             object_list = result.rows
+    //             //console.log(results)
+    //         }
+    //     });
+    //     res.render("object_list.hbs", {object_list: object_list});
+    // });
 
 
 
@@ -130,4 +130,10 @@ module.exports = function (app, passport) {
             console.log(req.body.textbox);
         }
     });
+
+    app.get('/mypenis', (req, res) => {
+        console.log(req.user);
+        res.render('homepage.hbs')
+    });
+
 };
