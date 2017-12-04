@@ -6,7 +6,6 @@ module.exports = function (app, passport) {
     /**
      * testing the database
      */
-    app.get()
     app.get("/test_database", function (req, res) {
         db.query("SELECT * FROM user_table;", (err, result) => {
             if (err) {
@@ -22,7 +21,7 @@ module.exports = function (app, passport) {
     });
 
     app.get("/", function (req, res) {
-        res.render("homepage.hbs");
+        res.render("index.hbs");
     });
 
     app.get("/login", function (req, res) {
