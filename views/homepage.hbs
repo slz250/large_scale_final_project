@@ -1,2 +1,31 @@
-<h1>Homepage</h1>
-<h3>Login/Logout/Registration</h3>
+<!-- <h1>Homepage</h1>
+<h3>Login/Logout/Registration</h3> -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+  </head>
+  <body>
+    <header>
+      <h1>Homepage</h1>
+    </header>
+    <body>
+      <h2>User Information</h2>
+      <p>user_id: {{user_id}}</p>
+      <p>first_name: {{first_name}}</p>
+      <p>last_name: {{last_name}}</p>
+      <p>email: {{email}}</p>
+      <p>username: {{username}}</p>
+      <p>password: {{password}}</p>
+      <h2>Your list of objects</h2>
+      <p>object 1</p>
+      <p>object 2</p>
+      <p>object 3</p>
+      <button type="submit" class="btn btn-default btn-lg">add item</button>
+      <button type="submit" class="btn btn-default btn-lg">logout</button>
+    </body>
+  </body>
+</html>

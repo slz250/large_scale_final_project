@@ -69,27 +69,56 @@ module.exports = function (app, passport) {
     })
 
 
-    //HOW TO GET user_id ?!
-    app.get("/:user_id", (req, res) => {
-        let object_list = null;
-        const query = {
-            text: "SELECT * FROM object_table where user_id = $1::text",
-            values: [user_id]
-        };
+    // //HOW TO GET user_id ?!
+    // app.get("/:user_id", (req, res) => {
+    //     let object_list = null;
+    //     // const query = {
+    //     //     text: "SELECT * FROM object_table where user_id = $1::text",
+    //     //     values: ['1234567890']
+    //     // };
+    //     const query = "SELECT * FROM object_table WHERE user_id = '1234567890'"
+    //     db.query(query, (err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //             // res.send("db err")
+    //         } else {
+    //             res.json(result.rows);
+    //             //res.send(result.rows)
+    //             // object_list = result.rows
+    //             // console.log(result)
+    //
+    //         }
+    //     });
+    //     // res.render("object_list.hbs", {object_list: object_list});
+    // });
+
+    //assumes user_id data type is text instead of an int
+    app.get("/:user_id", function (req, res) {
+        let query = "SELECT * FROM user_table WHERE user_id=";
+        query = query + "'" + req.params.user_id + "'";
+        // console.log(query);
         db.query(query, (err, result) => {
             if (err) {
-                console.log(err)
-                res.send("db err")
+                console.log(err);
+                res.send(err);
             } else {
-                //res.send(result.rows)
-                object_list = result.rows
+                //res.send(result.row)
+                // res.json(result.rows);
+                res.render('homepage',
+                {'user_id':result.rows[0].user_id,
+                'first_name':result.rows[0].first_name,
+                'last_name':result.rows[0].last_name,
+                'email':result.rows[0].email,
+                'username':result.rows[0].username,
+                'password':result.rows[0].password,
+                });
+                //get list of objects that belong to this user.
+                //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
+                console.log(result.rows[0]);
                 //console.log(results)
             }
         });
-        res.render("object_list.hbs", {object_list: object_list});
     });
-
-
 
 
     const user = "owner";
