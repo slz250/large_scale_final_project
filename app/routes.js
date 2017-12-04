@@ -55,6 +55,7 @@ module.exports = function (app, passport) {
           console.log(err)
         }else{
           db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
+            console.log('it gets here')
             if(err){
               console.log('Sign up unsuccessfull')
               console.log(err)
