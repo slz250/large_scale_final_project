@@ -20,11 +20,11 @@ module.exports = function (passport) {
     });
 
     passport.use('user',new LocalStrategy({
-      usernameField : 'email',
+      usernameField : 'username',
       passwordField : 'password',
       },
       (username, password, done) => {
-        db.query('SELECT * FROM user_table WHERE email = $1', [email], (err, result) => {
+        db.query('SELECT * FROM user_table WHERE username = $1 AND password = $2', [username, password], (err, result) => {
           if(err) {
             console.log(err)
             return done(err)

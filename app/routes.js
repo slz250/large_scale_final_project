@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
           email = req.body.email,
           password = req.body.password,
           username = req.body.username,
-          id = uuidv4();
+          id = uuidv4()
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -55,11 +55,13 @@ module.exports = function (app, passport) {
           console.log(err)
         }else{
           db.query('INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )', [id, firstName, lastName, email, username, hash], (err,result) => {
+            console.log('it gets here')
             if(err){
               console.log('Sign up unsuccessfull')
               console.log(err)
             }else{
               console.log('Sign up successfull')
+              res.redirect("/test_database");
             }
           })
         }
@@ -68,6 +70,7 @@ module.exports = function (app, passport) {
 
 
     //HOW TO GET user_id ?!
+<<<<<<< HEAD
     // app.get("/:user_id", (req, res) => {
     //     //  ensure authenticated
     //     //  console.log('this is being run')
@@ -88,6 +91,26 @@ module.exports = function (app, passport) {
     //     });
     //     res.render("object_list.hbs", {object_list: object_list});
     // });
+=======
+    app.get("/:user_id", (req, res) => {
+        let object_list = null;
+        const query = {
+            text: "SELECT * FROM object_table where user_id = $1::text",
+            values: [user_id]
+        };
+        db.query(query, (err, result) => {
+            if (err) {
+                console.log(err)
+                res.send("db err")
+            } else {
+                //res.send(result.rows)
+                object_list = result.rows
+                //console.log(results)
+            }
+        });
+        res.render("object_list.hbs", {object_list: object_list});
+    });
+>>>>>>> a893a7c9189622d2c358fb4bec8dbbfca1b1fcda
 
 
 
