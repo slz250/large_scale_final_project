@@ -112,6 +112,8 @@ module.exports = function (app, passport) {
                 'username':result.rows[0].username,
                 'password':result.rows[0].password,
                 });
+                //get list of objects that belong to this user.
+                //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
                 console.log(result.rows[0]);
                 //console.log(results)
             }
