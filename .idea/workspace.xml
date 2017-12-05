@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54530be2-066f-425e-951e-b704d602e6fd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/index-svg.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/index.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/qrcode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/qrcode.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/specific_item.hbs" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/views/item_list.hbs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/views/recover_item.hbs" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.js" afterPath="$PROJECT_DIR$/app/routes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/homepage.hbs" afterPath="$PROJECT_DIR$/views/homepage.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/recover_object.hbs" afterPath="$PROJECT_DIR$/views/recover_object.hbs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="routes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="157" column="145" lean-forward="false" selection-start-line="157" selection-start-column="145" selection-end-line="157" selection-end-column="145" />
+            <state relative-caret-position="-329">
+              <caret line="155" column="8" lean-forward="false" selection-start-line="155" selection-start-column="8" selection-end-line="155" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -67,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index-svg.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index-svg.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/index-svg.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -257,18 +243,18 @@
       <option name="presentableId" value="Default" />
       <updated>1510891373410</updated>
       <workItem from="1510891374698" duration="4389000" />
-      <workItem from="1511323685103" duration="23472000" />
+      <workItem from="1511323685103" duration="23787000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27861000" />
+    <option name="totallyTimeSpent" value="28176000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="630" y="0" width="650" height="800" extended-state="0" />
+    <frame x="476" y="0" width="804" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.04307692" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17661692" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -523,14 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="157" column="145" lean-forward="false" selection-start-line="157" selection-start-column="145" selection-end-line="157" selection-end-column="145" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/davidshimjs-qrcodejs-04f46c6/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -602,6 +580,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-329">
+          <caret line="155" column="8" lean-forward="false" selection-start-line="155" selection-start-column="8" selection-end-line="155" selection-end-column="8" />
           <folding />
         </state>
       </provider>

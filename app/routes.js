@@ -61,9 +61,7 @@ module.exports = function (app, passport) {
           lastName = req.body.last_name,
           email = req.body.email,
           password = req.body.password,
-          username = req.body.username,
-          // id = uuidv4();
-          id = db.query("CREATE OR REPLACE FUNCTION shard_1.id_generator(OUT result bigint) AS $$ DECLARE our_epoch bigint := 1314220021721; seq_id bigint; now_millis bigint; shard_id int := 1; BEGIN SELECT nextval('shard_1.global_id_sequence') % 1024 INTO seq_id; SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis; result := (now_millis - our_epoch) << 23; result := result | (shard_id << 10); result := result | (seq_id); END; $$ LANGUAGE PLPGSQ select shard_1.id_generator(); ");
+          username = req.body.username
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -71,8 +69,8 @@ module.exports = function (app, passport) {
           console.log(err);
         }else{
           let query = {
-            text:'INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )',
-            values: [id, firstName, lastName, email, username, hash]
+            text:'INSERT INTO user_table ( first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5 )',
+            values: [firstName, lastName, email, username, hash]
           }
           db.query(query, (err,result) => {
             console.log('it gets here')
@@ -91,27 +89,26 @@ module.exports = function (app, passport) {
 
     //assumes user_id data type is text instead of an int
     app.get("/:user_id", checkLoggedIn, function (req, res) {
-        let query = "SELECT * FROM user_table WHERE user_id=";
-        query = query + "'" + req.params.user_id + "'";
-        // console.log(query);
+        let userID = req.params.user_id
+        let query = {
+          text: "SELECT * FROM user_table WHERE user_id = $1",
+          values: [userID]
+        }
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
                 res.send(err);
             } else {
-                //res.send(result.row)
-                // res.json(result.rows);
-                let obj_query = 'SELECT name, user_id, object_id FROM object_table WHERE user_id=';
-                obj_query = obj_query + "'" + result.rows[0].user_id + "'";
-                console.log(obj_query);
+                let obj_query = {
+                  text: 'SELECT name FROM object_table WHERE user_id = $1',
+                  values:[userID]
+                }
+                console.log("This is the obj_query result:" + obj_query.rows);
                 db.query(obj_query, (error, obj_result) => {
                   if (error) {
-                    console.log(error);
+                    //console.log(error);
                     res.send(error);
                   } else {
-                    // console.log(obj_result.rows)
-                    // console.log('done')
-                      console.log(obj_result.rows[0]);
                     res.render('homepage',
                     {'user_id':result.rows[0].user_id,
                     'first_name':result.rows[0].first_name,
@@ -119,30 +116,45 @@ module.exports = function (app, passport) {
                     'email':result.rows[0].email,
                     'username':result.rows[0].username,
                     'password':result.rows[0].password,
-                    'objects':obj_result.rows
+                    'objects': obj_result.rows
                     });
                   }
                 });
-                //get list of objects that belong to this user.
-                //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
-                // console.log(result.rows[0]);
-                //console.log(results)
             }
         });
     });
 
-    app.post("/add_new_item", (req,res) => {
-
+    app.post("/:user_id", (req,res) => {
+        let objectName = req.body.object,
+            user_id = req.params.user_id,
+            url = "/" + user_id,
+            query = {
+          text:'INSERT INTO object_table ( name, state, user_id ) VALUES ($1, $2, $3 )',
+          values: [objectName, 2, user_id]
+        }
+        db.query(query, (err,result) => {
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Item added!')
+            res.redirect(url)
+          }
+        })
     });
 
     app.get("/:user_id/:object_id", checkLoggedIn, (req, res) => {
         /**
          * first get user then get object
          */
-        let object = null;
-        const query = "SELECT name, state FROM object_table where object_id ='" + req.params.object_id + "'";
+        let object_id = req.param.object_id,
+         user_id = req.params.user_id,
+         object = null,
+         query = {
+          text: "SELECT name, state FROM object_table where object_id = $1 AND user_id = $2",
+          values: [object_id, user_id]
+        };
+        
         db.query(query, (err, result) => {
-            console.log("TEST" + query);
             if (err) {
                 res.send(err);
             } else {
