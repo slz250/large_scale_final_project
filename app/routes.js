@@ -166,8 +166,8 @@ module.exports = function (app, passport) {
                 // const qrcode = new QRcode("qrcode");
                 // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
-                // res.render("specific_item.hbs", {object: object});
-                res.sendFile("/Users/shizhang/nyu_cs_work/large_scale/large_scale_final_project/public/davidshimjs-qrcodejs-04f46c6/index.html");
+                res.render("specific_item.hbs", {object: object});
+                // res.sendFile("C:\Users\micha\Desktop\testqr\testing\index.html");
             }
 
         });
