@@ -58,9 +58,7 @@ module.exports = function (app, passport) {
           lastName = req.body.last_name,
           email = req.body.email,
           password = req.body.password,
-          username = req.body.username,
-          // id = uuidv4();
-          id = db.query("CREATE OR REPLACE FUNCTION shard_1.id_generator(OUT result bigint) AS $$ DECLARE our_epoch bigint := 1314220021721; seq_id bigint; now_millis bigint; shard_id int := 1; BEGIN SELECT nextval('shard_1.global_id_sequence') % 1024 INTO seq_id; SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis; result := (now_millis - our_epoch) << 23; result := result | (shard_id << 10); result := result | (seq_id); END; $$ LANGUAGE PLPGSQ select shard_1.id_generator(); ");
+          username = req.body.username
 
       bcrypt.hash(password, 10, function(err, hash) {
         if(err){
@@ -68,8 +66,8 @@ module.exports = function (app, passport) {
           console.log(err);
         }else{
           let query = {
-            text:'INSERT INTO user_table (user_id, first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5, $6 )',
-            values: [id, firstName, lastName, email, username, hash]
+            text:'INSERT INTO user_table ( first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5 )',
+            values: [firstName, lastName, email, username, hash]
           }
           db.query(query, (err,result) => {
             console.log('it gets here')
@@ -102,13 +100,13 @@ module.exports = function (app, passport) {
                   text: 'SELECT name FROM object_table WHERE user_id = $1',
                   values:[userID]
                 }
-                console.log(obj_query);
+                console.log("This is the obj_query result:" + obj_query.rows);
                 db.query(obj_query, (error, obj_result) => {
                   if (error) {
-                    console.log(error);
+                    //console.log(error);
                     res.send(error);
                   } else {
-                    console.log(obj_result)
+                    //console.log(obj_result)
                     res.render('homepage',
                     {'user_id':result.rows[0].user_id,
                     'first_name':result.rows[0].first_name,
@@ -124,8 +122,22 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post("/add_new_item", (req,res) => {
-        console.log("works")
+    app.post("/:user_id", (req,res) => {
+        let objectName = req.body.object,
+            user_id = req.params.user_id,
+            url = "/" + user_id,
+            query = {
+          text:'INSERT INTO object_table ( name, state, user_id ) VALUES ($1, $2, $3 )',
+          values: [objectName, 2, user_id]
+        }
+        db.query(query, (err,result) => {
+          if(err){
+            console.log(err);
+          }else{
+            console.log('Item added!')
+            res.redirect(url)
+          }
+        })
     });
 
     const user = "owner";
