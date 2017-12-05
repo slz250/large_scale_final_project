@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Homepage</title>
-<<<<<<< HEAD
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -26,52 +25,20 @@
 <h2>Your list of objects</h2>
 <ul>
     {{#each objects}}
-        {{this.user_id}} {{this.object_id}}
-        <li>
-            <a href="/{{this.user_id}}/{{this.object_id}}">{{this.name}}</a><br>
-        </li>
+        {{this.user_id}}/{{this.object_id}}
+        <li><a href="{{this.user_id}}/{{this.object_id}}">{{this.name}}</a></li>
+        <br>
     {{/each}}
 </ul>
-<a href="/add_item">
+
+<form name='myForm' method="POST" action="/{{user_id}}">
+    Item Name: <input type="text" name="object"/>
     <button type="submit" class="btn btn-default btn-lg">add item</button>
-</a>
+</form>
+
 <a href="/logout">
     <button type="submit" class="btn btn-default btn-lg">logout</button>
 </a>
 </body>
 </body>
-=======
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-  </head>
-  <body>
-    <header>
-      <h1>Homepage</h1>
-    </header>
-    <body>
-      <h2>User Information</h2>
-      <ul>
-        <li>user_id: {{user_id}}</li>
-        <li>first_name: {{first_name}}</li>
-        <li>last_name: {{last_name}}</li>
-        <li>email: {{email}}</li>
-        <li>username: {{username}}</li>
-        <li>password: {{password}}</li>
-      </ul>
-      <h2>Your list of objects</h2>
-      <ul>
-        {{#each objects}}
-          <li><a href="{{user_id}}/{{this.object_id}}">{{this.name}}</a></li>
-        {{/each}}
-      </ul>
-
-      <form name = 'myForm' method="POST" action="/{{user_id}}">
-      Item Name: <input type="text" name="object"/>
-      <button type="submit" class="btn btn-default btn-lg">add item</button>
-      </form>
-
-      <a href="/logout"><button type="submit" class="btn btn-default btn-lg">logout</button> </a>
-    </body>
-  </body>
->>>>>>> c68633a9475fb7a82e05d02ad542a59684d76e29
 </html>
