@@ -24,7 +24,7 @@ module.exports = function (passport) {
             }
         })
     });
-    
+
     passport.use('user',new LocalStrategy({
       usernameField : 'username',
       passwordField : 'password',

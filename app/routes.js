@@ -142,6 +142,7 @@ module.exports = function (app, passport) {
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
+        console.log("/:user_id/:object_id");
         let object_id = req.param.object_id,
          user_id = req.params.user_id,
          object = null,
