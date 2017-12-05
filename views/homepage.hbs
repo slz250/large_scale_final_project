@@ -23,7 +23,7 @@
       <h2>Your list of objects</h2>
       <ul>
         {{#each objects}}
-          <li>{{this.name}}</li>
+          <li><a href="{{user_id}}/{{this._id}}">{{this.name}}</a></li>
         {{/each}}
       </ul>
 
