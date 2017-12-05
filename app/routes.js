@@ -1,6 +1,9 @@
 const db = require('../db')
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+// const QRcode = require("../public/davidshimjs-qrcodejs-04f46c6/qrcode");
+// require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
+const host = "localhost:3000";
 
 module.exports = function (app, passport) {
     /**
@@ -98,7 +101,7 @@ module.exports = function (app, passport) {
             } else {
                 //res.send(result.row)
                 // res.json(result.rows);
-                let obj_query = 'SELECT name FROM object_table WHERE user_id=';
+                let obj_query = 'SELECT name, user_id, object_id FROM object_table WHERE user_id=';
                 obj_query = obj_query + "'" + result.rows[0].user_id + "'";
                 console.log(obj_query);
                 db.query(obj_query, (error, obj_result) => {
@@ -108,6 +111,7 @@ module.exports = function (app, passport) {
                   } else {
                     // console.log(obj_result.rows)
                     // console.log('done')
+                      console.log(obj_result.rows[0]);
                     res.render('homepage',
                     {'user_id':result.rows[0].user_id,
                     'first_name':result.rows[0].first_name,
@@ -121,9 +125,6 @@ module.exports = function (app, passport) {
                 });
                 //get list of objects that belong to this user.
                 //query for SELECT name FROM object_table WHERE user_id= (user_id from current user)
-
-
-
                 // console.log(result.rows[0]);
                 //console.log(results)
             }
@@ -134,26 +135,38 @@ module.exports = function (app, passport) {
 
     });
 
-    const user = "owner";
-    app.get("/:user_id/:object_id", (req, res) => {
+    app.get("/:user_id/:object_id", checkLoggedIn, (req, res) => {
         /**
          * first get user then get object
          */
         let object = null;
-        db.query("SELECT name, state FROM object_table where object_id = 12032017", (err, result) => {
+        const query = "SELECT name, state FROM object_table where object_id ='" + req.params.object_id + "'";
+        db.query(query, (err, result) => {
+            console.log("TEST" + query);
             if (err) {
                 res.send(err);
             } else {
                 object = result.rows[0];
-                // console.log(object.rows[0]);
+
+                /**
+                 * qr code
+                 */
+            // const qrcode = new QRcode("qrcode");
+            // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
-                if (user === "owner") {
-                    res.render("recover_object.hbs", {object: object, owner: true});
-                } else {
-                    res.render("recover_object.hbs", {object: object, owner: false});
-                }
+                    // res.render("specific_item.hbs", {object: object});
+                res.sendFile("/Users/shizhang/nyu_cs_work/large_scale/large_scale_final_project/public/davidshimjs-qrcodejs-04f46c6/index.html");
             }
+
         });
+    });
+
+    app.get("/:user_id/:object_id/recover", (req,res) => {
+        const object = {
+            user_id: req.params.user_id,
+            object_id: req.params.object
+        };
+        res.render("recover_object.hbs", {object: object});
     });
 
     app.post("/update_status", (req,res) => {
