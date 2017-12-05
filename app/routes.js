@@ -142,11 +142,14 @@ module.exports = function (app, passport) {
 
     const user = "owner";
     app.get("/:user_id/:object_id", (req, res) => {
-        /**
-         * first get user then get object
-         */
-        let object = null;
-        db.query("SELECT name, state FROM object_table where object_id = 12032017", (err, result) => {
+        let object_id = req.param.object_id,
+         user_id = req.params.user_id,
+         object = null,
+         query = {
+          text: "SELECT name, state FROM object_table where object_id = $1 AND user_id = $2",
+          values: [object_id, user_id]
+        }
+        db.query(query, (err, result) => {
             if (err) {
                 res.send(err);
             } else {
