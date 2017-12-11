@@ -159,14 +159,15 @@ module.exports = function (app, passport) {
                 res.send(err);
             } else {
                 object = result.rows[0];
-                console.log(object);
+                console.log(result.rows[0]);
+                console.log(req.params);
                 /**
                  * qr code
                  */
                 // const qrcode = new QRcode("qrcode");
                 // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
-                res.render("specific_item.hbs", {object: object});
+                res.render("specific_item.hbs", {object: object, id: req.params});
                 // res.sendFile("C:\Users\micha\Desktop\testqr\testing\index.html");
             }
 
@@ -181,16 +182,38 @@ module.exports = function (app, passport) {
         res.render("recover_object.hbs", {object: object});
     });
 
-    app.post("/update_status", (req, res) => {
+    app.post("/:user_id/:object_id/update_status", (req, res) => {
         // res.send(req.body.item_status);
+        // if (Object.keys(req.body).length !== 0) {
+        //     const status = parseInt(req.body.item_status);
+        //     db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+        //         if (err) {
+        //             res.send(err);
+        //         }
+        //         let url = "/" + req.body.user_id;
+        //         res.redirect(url)
+        //     });
+        // }
+
         if (Object.keys(req.body).length !== 0) {
-            const status = parseInt(req.body.item_status);
-            db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+          // console.log(req.body);
+          // console.log(req)
+          let status = req.body.item_status,
+              user = req.body.user,
+              object = req.body.object,
+              query = {
+                text: "UPDATE object_table SET state=$1 WHERE user_id=$2 AND object_id=$3",
+                values: [status, user, object]
+              }
+              // console.log(query)
+              db.query(query, (err, result) => {
                 if (err) {
-                    res.send(err);
+                  return res.send(err);
+                } else {
+                  let url = "/" + user + "/" + object;
+                  res.redirect(url)
                 }
-                res.redirect("/userid/12032017");
-            });
+              });
         }
     });
 
@@ -209,7 +232,7 @@ module.exports = function (app, passport) {
               if (err) {
                 return res.send(err);
               } else {
-                let url = "/" + req.body.user;
+                let url = "/" + user;
                 res.redirect(url)
               }
             });
