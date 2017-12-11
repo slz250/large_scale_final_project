@@ -27,6 +27,11 @@
     {{#each objects}}
         {{this.user_id}}/{{this.object_id}}
         <li><a href="{{this.user_id}}/{{this.object_id}}">{{this.name}}</a></li>
+          <form name="deleteForm" method="POST" action="/{{this.user_id}}/{{this.object_id}}/delete">
+            <input type="hidden" name="user" value="{{this.user_id}}"/>
+            <input type="hidden" name="object" value="{{this.object_id}}"/>
+            <button type="submit" class="btn bt">Delete Item</button>
+          </form>
         <br>
     {{/each}}
 </ul>

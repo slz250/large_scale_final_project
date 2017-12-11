@@ -194,9 +194,25 @@ module.exports = function (app, passport) {
         }
     });
 
-    app.post("/:user_id/:object_id", (req, res) => {
+    app.post("/:user_id/:object_id/delete", (req, res) => {
         if (Object.keys(req.body).length !== 0) {
-            console.log(req.body.textbox);
+            console.log(req.body);
+            let user = req.body.user,
+                object = req.body.object,
+                query = {
+                    text: "DELETE FROM object_table WHERE user_id=$1 AND object_id=$2",
+                    values: [user, object]
+                };
+            console.log(query);
+
+            db.query(query, (err, result) => {
+              if (err) {
+                return res.send(err);
+              } else {
+                let url = "/" + req.body.user;
+                res.redirect(url)
+              }
+            });
         }
     });
 
