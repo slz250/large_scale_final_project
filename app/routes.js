@@ -217,6 +217,7 @@ module.exports = function (app, passport) {
         const object = {
             let user_id: req.params.user_id,
                 object_id: req.params.object,
+        }
         res.render("recover_object.hbs", {object: object});
     });
 
@@ -224,7 +225,8 @@ module.exports = function (app, passport) {
         const object = {
             let user_id: req.params.user_id,
                 object_id: req.params.object,
-
+        }
+        let isSent = false;
         const msg = {
             to: //query to find user's email?
             from: 'noreply@QrFound.com',
@@ -232,9 +234,9 @@ module.exports = function (app, passport) {
             text: req.params.textbox,
           };
         sgMail.send(msg);
-
+        isSent= true;
         };
-        res.render("recover_object.hbs", {object: object});
+        res.render("recover_object.hbs", {object: object, isSent: isSent});
     });
 
     app.post("/:user_id/:object_id/update_status", (req, res) => {
