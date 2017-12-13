@@ -1,9 +1,17 @@
 const db = require('../db')
 const bcrypt = require('bcrypt');
-const uuidv4 = require('uuid/v4');
+const sgMail = require('@sendgrid/mail');
 // const QRcode = require("../public/davidshimjs-qrcodejs-04f46c6/qrcode");
 // require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
 const host = "localhost:3000";
+
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+/* must run these ini console beforehand in order for emails to work
+1. echo "export SENDGRID_API_KEY='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'" > sendgrid.env
+2. echo "sendgrid.env" >> .gitignore
+3. source ./sendgrid.env
+*/
 
 module.exports = function (app, passport) {
     /**
@@ -209,8 +217,21 @@ module.exports = function (app, passport) {
         const object = {
             let user_id: req.params.user_id,
                 object_id: req.params.object,
-                message: req.post.textbox
+        res.render("recover_object.hbs", {object: object});
+    });
 
+    app.post("/:user_id/:object_id/recover", (req, res) => {
+        const object = {
+            let user_id: req.params.user_id,
+                object_id: req.params.object,
+
+        const msg = {
+            to: //query to find user's email?
+            from: 'noreply@QrFound.com',
+            subject: 'your item has been found!',
+            text: req.params.textbox,
+          };
+        sgMail.send(msg);
 
         };
         res.render("recover_object.hbs", {object: object});
