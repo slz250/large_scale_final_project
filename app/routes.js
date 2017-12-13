@@ -8,7 +8,8 @@ const host = "localhost:3000";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 /* must run these ini console beforehand in order for emails to work
-1. echo "export SENDGRID_API_KEY='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'" > sendgrid.env
+1. echo "export SENDGRID_API_KEY='API KEY'" > sendgrid.env
+                *the 'API KEY' I will have to message to you or w/e or else I get banned from sendgrid lol
 2. echo "sendgrid.env" >> .gitignore
 3. source ./sendgrid.env
 */
@@ -253,7 +254,7 @@ module.exports = function (app, passport) {
         let msg = {
             to: object.email,
             from: 'noreply@QrFound.com',
-            subject: 'your item has been found!',
+            subject: 'your item has been found!', //query to find item name?
             text: req.params.textbox,
           };
         sgMail.send(msg);
