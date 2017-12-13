@@ -11,8 +11,11 @@
 
     <form method = "post" action = "/{{id.user_id}}/{{id.object_id}}/update_status">
         In-Possession <input type = "radio" name = "item_status" value = 2>
+        <br />
         Found <input type = "radio" name = "item_status" value = 1>
+        <br />
         Lost <input type = "radio" name = "item_status" value = 0><br><br>
+        <br />
         <input type="hidden" name="user" value="{{id.user_id}}"/>
         <input type="hidden" name="object" value="{{id.object_id}}"/>
         <input type = "submit" value = "Update Status">

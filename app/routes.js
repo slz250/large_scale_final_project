@@ -60,6 +60,18 @@ module.exports = function (app, passport) {
         console.log('another test')
     })
 
+    app.get('/logout', function (req, res) {
+        req.logout();
+        console.log('its trying to logout')
+        // req.session.destroy(function (err) {
+        //   if (err) { return next(err); }
+        //   // The response should indicate that the user is no longer authenticated.
+        //   return res.send({ authenticated: req.isAuthenticated() });
+        // });
+        res.redirect('/');
+    });
+
+
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
     });
@@ -142,12 +154,11 @@ module.exports = function (app, passport) {
                     text: 'SELECT name, user_id, object_id FROM object_table WHERE user_id = $1',
                     values: [userID]
                 }
-                console.log("This is the obj_query result:" + obj_query.rows);
                 db.query(obj_query, (error, obj_result) => {
                     if (error) {
                         res.send(error);
                     } else {
-                        console.log(obj_result.rows);
+                        //console.log(obj_result.rows);
                         res.render('homepage',
                             {
                                 'user_id': result.rows[0].user_id,
@@ -198,8 +209,8 @@ module.exports = function (app, passport) {
                 res.send(err);
             } else {
                 object = result.rows[0];
-                console.log(result.rows[0]);
-                console.log(req.params);
+                //console.log(result.rows[0]);
+                //console.log(req.params);
                 /**
                  * qr code
                  */
@@ -214,28 +225,40 @@ module.exports = function (app, passport) {
     });
 
     app.get("/:user_id/:object_id/recover", (req, res) => {
-        const object = {
-            let user_id: req.params.user_id,
+        let object = {
+                user_id: req.params.user_id,
                 object_id: req.params.object,
         }
         res.render("recover_object.hbs", {object: object});
     });
 
     app.post("/:user_id/:object_id/recover", (req, res) => {
-        const object = {
-            let user_id: req.params.user_id,
+        let object = {
+                user_id: req.params.user_id,
                 object_id: req.params.object,
+                email: ''
         }
         let isSent = false;
-        const msg = {
-            to: //query to find user's email?
+        let query = {
+            text: 'SELECT email FROM user_table where user_id = $1',
+            values: [object.user_id]
+        }
+        db.query(query, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                object.email = result.rows[0]
+            }
+        })
+        let msg = {
+            to: object.email,
             from: 'noreply@QrFound.com',
             subject: 'your item has been found!',
             text: req.params.textbox,
           };
         sgMail.send(msg);
         isSent= true;
-        };
+
         res.render("recover_object.hbs", {object: object, isSent: isSent});
     });
 
@@ -296,10 +319,7 @@ module.exports = function (app, passport) {
         }
     });
 
-    app.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
-    });
+
 
 };
 
