@@ -242,17 +242,18 @@ module.exports = function (app, passport) {
             text: 'SELECT email FROM user_table where user_id = $1',
             values: [object.user_id]
         }
+        let email = ''
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                object.email = result.rows[0]
+                email = result.rows[0].email
             }
         });
         console.log(object.email +'this is the email');
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         let msg = {
-            to: object.email,
+            to: email,
             from: 'noreply@QrFound.com',
             subject: 'your item has been found!', //query to find item name?
             text: req.body.textbox,
