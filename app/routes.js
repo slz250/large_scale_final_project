@@ -236,23 +236,23 @@ module.exports = function (app, passport) {
     app.post("/:user_id/:object_id/recover", (req, res) => {
         let object = {
                 user_id: req.params.user_id,
-                object_id: req.params.object,
-                email: ''
+                object_id: req.params.object
         }
         let isSent = false;
         let query = {
             text: 'SELECT email FROM user_table where user_id = $1',
             values: [object.user_id]
         }
+        let email = ''
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                object.email = result.rows[0]
+                email = result.rows[0].email
             }
         })
         let msg = {
-            to: object.email,
+            to: email,
             from: 'noreply@QrFound.com',
             subject: 'your item has been found!', //query to find item name?
             text: req.params.textbox,
