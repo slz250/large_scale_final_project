@@ -234,11 +234,8 @@ module.exports = function (app, passport) {
     app.post("/:user_id/:object_id/recover", (req, res) => {
         let object = {
                 user_id: req.params.user_id,
-<<<<<<< HEAD
                 object_id: req.params.object_id,
-=======
-                object_id: req.params.object_id
->>>>>>> 5df197e429de2412f658e21c01f2edf87605cb6c
+                email: ''
         }
         // let isSent = false;
         let query = {
