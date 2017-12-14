@@ -1,8 +1,8 @@
 <h1>Recover Item</h1>
-<form method="post" action="/{{id.user_id}}/{{id.object_id}}/recover">
+<p>Please message the owner of the lost item</p>
+<form method="post" action="/{{object.user_id}}/{{object.object_id}}/recover">
     <textarea name="textbox" cols="40" rows="5"></textarea><br>
     <input type="submit" value="Send Message">
 </form>
-{{#if isSent}}
-<p>your email has been sent!</p>
-{{/if}}
+
+{{object.user_id}}/{{object.object_id}}
