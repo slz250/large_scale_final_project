@@ -235,7 +235,6 @@ module.exports = function (app, passport) {
         let object = {
                 user_id: req.params.user_id,
                 object_id: req.params.object_id,
-                email: ''
         }
         // let isSent = false;
         let query = {
