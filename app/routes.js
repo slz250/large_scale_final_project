@@ -1,9 +1,16 @@
 const db = require('../db')
 const bcrypt = require('bcrypt');
-const uuidv4 = require('uuid/v4');
+const sgMail = require('@sendgrid/mail');
 // const QRcode = require("../public/davidshimjs-qrcodejs-04f46c6/qrcode");
 // require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
 const host = "localhost:3000";
+
+/* must run these ini console beforehand in order for emails to work
+1. echo "export SENDGRID_API_KEY='API KEY'" > sendgrid.env
+                *the 'API KEY' I will have to message to you or w/e or else I get banned from sendgrid lol
+2. echo "sendgrid.env" >> .gitignore
+3. source ./sendgrid.env
+*/
 
 module.exports = function (app, passport) {
     /**
@@ -52,6 +59,18 @@ module.exports = function (app, passport) {
         console.log('another test')
     })
 
+    app.get('/logout', function (req, res) {
+        req.logout();
+        console.log('its trying to logout')
+        // req.session.destroy(function (err) {
+        //   if (err) { return next(err); }
+        //   // The response should indicate that the user is no longer authenticated.
+        //   return res.send({ authenticated: req.isAuthenticated() });
+        // });
+        res.redirect('/');
+    });
+
+
     app.get("/registration", function (req, res) {
         res.render("registration.hbs");
     });
@@ -62,7 +81,38 @@ module.exports = function (app, passport) {
             email = req.body.email,
             password = req.body.password,
             username = req.body.username
+        /*  id = generated in postgres using these sql queries:
+        create sequence public.global_id_sequence;
 
+        CREATE OR REPLACE FUNCTION public.id_generator(OUT result bigint) AS $$
+        DECLARE
+        our_epoch bigint := 1314220021721;
+        seq_id bigint;
+        now_millis bigint;
+        shard_id int := 1;
+        BEGIN
+        SELECT nextval('public.global_id_sequence') % 1024 INTO seq_id;
+
+        SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+        result := (now_millis - our_epoch) << 23;
+        result := result | (shard_id << 10);
+        result := result | (seq_id);
+        END;
+        $$ LANGUAGE PLPGSQL;
+
+        select public.id_generator();
+
+        ---------------------------------------------------------------------------------
+
+        create table public.user_table(
+        user_id bigint not null default public.id_generator(),
+        email text not null unique,
+        first_name text,
+        last_name text,
+        username text,
+        password text
+
+        */
         bcrypt.hash(password, 10, function (err, hash) {
             if (err) {
                 console.log('error hashing');
@@ -103,12 +153,11 @@ module.exports = function (app, passport) {
                     text: 'SELECT name, user_id, object_id FROM object_table WHERE user_id = $1',
                     values: [userID]
                 }
-                console.log("This is the obj_query result:" + obj_query.rows);
                 db.query(obj_query, (error, obj_result) => {
                     if (error) {
                         res.send(error);
                     } else {
-                        console.log(obj_result.rows);
+                        //console.log(obj_result.rows);
                         res.render('homepage',
                             {
                                 'user_id': result.rows[0].user_id,
@@ -158,16 +207,15 @@ module.exports = function (app, passport) {
                 res.send(err);
             } else {
                 object = result.rows[0];
-                console.log(object);
+                //console.log(result.rows[0]);
+                //console.log(req.params);
                 /**
                  * qr code
                  */
                 // const qrcode = new QRcode("qrcode");
                 // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
-                object.user_id = req.params.user_id;
-                object.object_id = req.params.object_id;
-                res.render("specific_item.hbs", {object: object});
+                res.render("specific_item.hbs", {object: object, id: req.params});
                 // res.sendFile("C:\Users\micha\Desktop\testqr\testing\index.html");
             }
 
@@ -175,36 +223,104 @@ module.exports = function (app, passport) {
     });
 
     app.get("/:user_id/:object_id/recover", (req, res) => {
-        const object = {
-            user_id: req.params.user_id,
-            object_id: req.params.object
-        };
+        let object = {
+                user_id: req.params.user_id,
+                object_id: req.params.object_id,
+        }
         res.render("recover_object.hbs", {object: object});
     });
 
-    app.post("/update_status", (req, res) => {
+    app.post("/:user_id/:object_id/recover", (req, res) => {
+        let object = {
+                user_id: req.params.user_id,
+                object_id: req.params.object_id,
+        }
+        // let isSent = false;
+        let query = {
+            text: 'SELECT email FROM user_table where user_id = $1',
+            values: [object.user_id]
+        }
+        let email = ''
+        db.query(query, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result.rows[0].email)
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                let msg = {
+                    to: result.rows[0].email,
+                    from: 'noreply@QrFound.com',
+                    subject: 'your item has been found!', //query to find item name?
+                    text: req.body.textbox,
+                  };
+                console.log(msg);
+                sgMail.send(msg);
+                // isSent= true;
+                res.redirect('/' + object.user_id + '/' + object.object_id + '/recover');
+                // res.render("recover_object.hbs", {object: object, isSent: isSent});
+
+            }
+        });
+    });
+
+    app.post("/:user_id/:object_id/update_status", (req, res) => {
         // res.send(req.body.item_status);
+        // if (Object.keys(req.body).length !== 0) {
+        //     const status = parseInt(req.body.item_status);
+        //     db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+        //         if (err) {
+        //             res.send(err);
+        //         }
+        //         let url = "/" + req.body.user_id;
+        //         res.redirect(url)
+        //     });
+        // }
+
         if (Object.keys(req.body).length !== 0) {
-            const status = parseInt(req.body.item_status);
-            db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
+          // console.log(req.body);
+          // console.log(req)
+          let status = req.body.item_status,
+              user = req.body.user,
+              object = req.body.object,
+              query = {
+                text: "UPDATE object_table SET state=$1 WHERE user_id=$2 AND object_id=$3",
+                values: [status, user, object]
+              }
+              // console.log(query)
+              db.query(query, (err, result) => {
                 if (err) {
-                    res.send(err);
+                  return res.send(err);
+                } else {
+                  let url = "/" + user + "/" + object;
+                  res.redirect(url)
                 }
-                res.redirect("/userid/12032017");
+              });
+        }
+    });
+
+    app.post("/:user_id/:object_id/delete", (req, res) => {
+        if (Object.keys(req.body).length !== 0) {
+            console.log(req.body);
+            let user = req.body.user,
+                object = req.body.object,
+                query = {
+                    text: "DELETE FROM object_table WHERE user_id=$1 AND object_id=$2",
+                    values: [user, object]
+                };
+            console.log(query);
+
+            db.query(query, (err, result) => {
+              if (err) {
+                return res.send(err);
+              } else {
+                let url = "/" + user;
+                res.redirect(url)
+              }
             });
         }
     });
 
-    app.post("/:user_id/:object_id", (req, res) => {
-        if (Object.keys(req.body).length !== 0) {
-            console.log(req.body.textbox);
-        }
-    });
 
-    app.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
-    });
 
 };
 

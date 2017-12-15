@@ -4,3 +4,4 @@ package-lock.json
 .idea/workspace.xml
 test
 
+"sendgrid.env"

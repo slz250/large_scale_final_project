@@ -7,10 +7,12 @@ const bcrypt = require('bcrypt');
 // expose this function to our app using module.exports
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
+      console.log("its serializing user")
         done(null, user.user_id);
     });
 
     passport.deserializeUser(function (user_id, done) {
+      console.log("its deserializing User")
         let query = {
           text: 'SELECT user_id, username FROM user_table WHERE user_id = $1',
           values: [user_id]
@@ -24,7 +26,7 @@ module.exports = function (passport) {
             }
         })
     });
-    
+
     passport.use('user',new LocalStrategy({
       usernameField : 'username',
       passwordField : 'password',

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/slz250/large_scale_final_project#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.1.4",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
@@ -29,8 +30,12 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+<<<<<<< HEAD
     "pg": "^7.4.0",
     "qrcode": "^1.0.0",
     "uuid": "^3.1.0"
+=======
+    "pg": "^7.4.0"
+>>>>>>> bb315331539daa13da89644aae633de950fb987e
   }
 }
