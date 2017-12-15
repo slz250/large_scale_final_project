@@ -147,11 +147,10 @@ module.exports = function (app, passport) {
         /**
          * first get user then get object
          */
-        let object_id = req.params.object_id,
-            object = null,
+        let object = null,
             query = {
                 text: "SELECT name, state FROM object_table where object_id = $1",
-                values: [object_id]
+                values: [req.params.object_id]
             };
 
         db.query(query, (err, result) => {
@@ -166,6 +165,8 @@ module.exports = function (app, passport) {
                 // const qrcode = new QRcode("qrcode");
                 // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
+                object.user_id = req.params.user_id;
+                object.object_id = req.params.object_id;
                 res.render("specific_item.hbs", {object: object});
                 // res.sendFile("C:\Users\micha\Desktop\testqr\testing\index.html");
             }

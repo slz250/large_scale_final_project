@@ -5,7 +5,7 @@
     <title>testing</title>
   </head>
   <body>
-    <h1>Item Status</h1>-->
+    <h1>Item Info</h1>
     <h3>Name: {{object.name}}</h3>
     <h3>Current Status: {{object.state}}</h3>
 
@@ -16,10 +16,10 @@
         <input type = "submit" value = "Update Status">
     </form>
 
-    <h1>Testing QR code</h1>
+    <h1>Your Item's QR Code</h1>
     <div id="qrcode"></div>
     <script type="text/javascript">
-      new QRCode(document.getElementById("qrcode"), "https://www.google.com");
+      new QRCode(document.getElementById("qrcode"), "localhost:3000/{{object.user_id}}/{{object.object_id}}/recover");
     </script>
   </body>
 </html>
