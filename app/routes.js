@@ -235,7 +235,6 @@ module.exports = function (app, passport) {
         let object = {
                 user_id: req.params.user_id,
                 object_id: req.params.object_id,
-                email: ''
         }
         // let isSent = false;
         let query = {
@@ -248,22 +247,21 @@ module.exports = function (app, passport) {
                 console.log(err);
             } else {
                 console.log(result.rows[0].email)
-                email = result.rows[0].email
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                let msg = {
+                    to: result.rows[0].email,
+                    from: 'noreply@QrFound.com',
+                    subject: 'your item has been found!', //query to find item name?
+                    text: req.body.textbox,
+                  };
+                console.log(msg);
+                sgMail.send(msg);
+                // isSent= true;
+                res.redirect('/' + object.user_id + '/' + object.object_id + '/recover');
+                // res.render("recover_object.hbs", {object: object, isSent: isSent});
+
             }
         });
-        console.log(object.email +'this is the email');
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        let msg = {
-            to: 'no552@nyu.edu',
-            from: 'noreply@QrFound.com',
-            subject: 'your item has been found!', //query to find item name?
-            text: req.body.textbox,
-          };
-          console.log(msg);
-        sgMail.send(msg);
-        // isSent= true;
-        res.redirect('/' + object.user_id + '/' + object.object_id + '/recover');
-        // res.render("recover_object.hbs", {object: object, isSent: isSent});
     });
 
     app.post("/:user_id/:object_id/update_status", (req, res) => {
