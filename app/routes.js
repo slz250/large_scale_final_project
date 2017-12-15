@@ -1,9 +1,8 @@
-const db = require('../db')
+const db = require('../db/index.js')
 const bcrypt = require('bcrypt');
 const sgMail = require('@sendgrid/mail');
 // const QRcode = require("../public/davidshimjs-qrcodejs-04f46c6/qrcode");
 // require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
-const host = "localhost:3000";
 
 /* must run these ini console beforehand in order for emails to work
 1. echo "export SENDGRID_API_KEY='API KEY'" > sendgrid.env
