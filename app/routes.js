@@ -248,11 +248,12 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log(err);
             } else {
+                console.log(result.rows[0].email)
                 email = result.rows[0].email
             }
         })
         let msg = {
-            to: email,
+            to: 'no552@nyu.edu',
             from: 'noreply@QrFound.com',
             subject: 'your item has been found!', //query to find item name?
             text: req.params.textbox,
