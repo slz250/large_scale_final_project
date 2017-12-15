@@ -113,27 +113,43 @@ module.exports = function (app, passport) {
         password text
 
         */
-        bcrypt.hash(password, 10, function (err, hash) {
-            if (err) {
-                console.log('error hashing');
-                console.log(err);
-            } else {
-                let query = {
-                    text: 'INSERT INTO user_table ( first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5 )',
-                    values: [firstName, lastName, email, username, hash]
-                }
-                db.query(query, (err, result) => {
-                    console.log('it gets here')
-                    if (err) {
-                        console.log('Sign up unsuccessful');
-                        console.log(err);
-                    } else {
-                        console.log('Sign up successfull')
-                        //console.log(req.user)
-                        res.redirect('/login')
-                    }
-                })
+        let checkQuery = {
+          text: 'Select username from user_table where username = $1',
+          values: [username]
+        }
+        db.query(checkQuery, (err, result) => {
+          if (err){
+            console.log(err)
+          }else{
+            if(result.rows[0]){
+              console.log('username already exists')
+              res.render("registration.hbs");
+            }else{
+              console.log('Youre in the clear!')
+              bcrypt.hash(password, 10, function (err, hash) {
+                  if (err) {
+                      console.log('error hashing');
+                      console.log(err);
+                  } else {
+                      let query = {
+                          text: 'INSERT INTO user_table ( first_name, last_name, email, username, password) VALUES ($1, $2, $3, $4, $5 )',
+                          values: [firstName, lastName, email, username, hash]
+                      }
+                      db.query(query, (err, result) => {
+                          console.log('it gets here')
+                          if (err) {
+                              console.log('Sign up unsuccessful');
+                              console.log(err);
+                          } else {
+                              console.log('Sign up successfull')
+                              //console.log(req.user)
+                              res.redirect('/login')
+                          }
+                      })
+                  }
+              })
             }
+          }
         })
     });
 
@@ -241,7 +257,6 @@ module.exports = function (app, passport) {
             text: 'SELECT email FROM user_table where user_id = $1',
             values: [object.user_id]
         }
-        let email = ''
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
