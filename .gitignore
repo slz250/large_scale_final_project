@@ -2,5 +2,7 @@ node_modules
 package-lock.json
 .idea
 .idea/workspace.xml
+test
 
 "sendgrid.env"
+sendgrid.env

@@ -21,7 +21,7 @@
         <input type = "submit" value = "Update Status">
     </form>
 
-    <h1>Testing QR code</h1>
+    <h1>Your Item's QR Code</h1>
     <div id="qrcode"></div>
 
     <br>
@@ -31,7 +31,7 @@
       <input type="submit" value="Back to homepage"/>
     </form>
     <script type="text/javascript">
-      new QRCode(document.getElementById("qrcode"), "https://www.google.com");
+      new QRCode(document.getElementById("qrcode"), "qr-found.herokuapp.com/{{object.user_id}}/{{object.object_id}}/recover");
     </script>
   </body>
 </html>

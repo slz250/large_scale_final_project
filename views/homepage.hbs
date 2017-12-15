@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <title>Homepage</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- load fontawesome -->
 </head>
 <body>
 <header>
@@ -20,12 +18,11 @@
     <li>last_name: {{last_name}}</li>
     <li>email: {{email}}</li>
     <li>username: {{username}}</li>
-    <li>password: {{password}}</li>
+    <!--<li>password: {{password}}</li>-->
 </ul>
 <h2>Your list of objects</h2>
 <ul>
     {{#each objects}}
-        {{this.user_id}}/{{this.object_id}}
         <li><a href="{{this.user_id}}/{{this.object_id}}">{{this.name}}</a></li>
           <form name="deleteForm" method="POST" action="/{{this.user_id}}/{{this.object_id}}/delete">
             <input type="hidden" name="user" value="{{this.user_id}}"/>
