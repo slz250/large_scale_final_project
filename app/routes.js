@@ -11,6 +11,8 @@ const sgMail = require('@sendgrid/mail');
 3. source ./sendgrid.env
 */
 
+let user_global = null;
+
 module.exports = function (app, passport) {
     /**
      * testing the database
@@ -30,6 +32,10 @@ module.exports = function (app, passport) {
     });
 
     app.get("/", function (req, res) {
+        if (req.isAuthenticated()) {
+
+            res.redirect("/")
+        }
         res.render("index.hbs");
     });
 
@@ -49,6 +55,7 @@ module.exports = function (app, passport) {
                 req.logIn(user, function (err) {
                     if (err) console.log(err)
                     else {
+                        user_global = user;
                         console.log('Sign in successfull')
                         return res.redirect('/' + user.user_id);
                     }
@@ -66,6 +73,7 @@ module.exports = function (app, passport) {
         //   // The response should indicate that the user is no longer authenticated.
         //   return res.send({ authenticated: req.isAuthenticated() });
         // });
+        user_global = null;
         res.redirect('/');
     });
 
@@ -123,6 +131,7 @@ module.exports = function (app, passport) {
                 }
                 db.query(query, (err, result) => {
                     console.log('it gets here')
+                    console.log(query);
                     if (err) {
                         console.log('Sign up unsuccessful');
                         console.log(err);
