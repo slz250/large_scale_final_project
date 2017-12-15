@@ -79,7 +79,7 @@ module.exports = function (app, passport) {
 
 
     app.get("/registration", function (req, res) {
-        res.render("registration.hbs");
+        res.render("registration.hbs", {exists: false});
     });
 
     app.post('/registration', function (req, res) {
@@ -130,7 +130,7 @@ module.exports = function (app, passport) {
           }else{
             if(result.rows[0]){
               console.log('username already exists')
-              res.render("registration.hbs");
+              res.render("registration.hbs", {exists: true});
             }else{
               console.log('Youre in the clear!')
               bcrypt.hash(password, 10, function (err, hash) {
