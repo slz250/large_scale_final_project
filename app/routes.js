@@ -5,8 +5,6 @@ const sgMail = require('@sendgrid/mail');
 // require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
 const host = "localhost:3000";
 
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 /* must run these ini console beforehand in order for emails to work
 1. echo "export SENDGRID_API_KEY='API KEY'" > sendgrid.env
                 *the 'API KEY' I will have to message to you or w/e or else I get banned from sendgrid lol
@@ -236,9 +234,10 @@ module.exports = function (app, passport) {
     app.post("/:user_id/:object_id/recover", (req, res) => {
         let object = {
                 user_id: req.params.user_id,
-                object_id: req.params.object_id
+                object_id: req.params.object_id,
+                email: ''
         }
-        let isSent = false;
+        // let isSent = false;
         let query = {
             text: 'SELECT email FROM user_table where user_id = $1',
             values: [object.user_id]
@@ -251,17 +250,20 @@ module.exports = function (app, passport) {
                 console.log(result.rows[0].email)
                 email = result.rows[0].email
             }
-        })
+        });
+        console.log(object.email +'this is the email');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         let msg = {
             to: 'no552@nyu.edu',
             from: 'noreply@QrFound.com',
             subject: 'your item has been found!', //query to find item name?
-            text: req.params.textbox,
+            text: req.body.textbox,
           };
+          console.log(msg);
         sgMail.send(msg);
-        isSent= true;
-
-        res.render("recover_object.hbs", {object: object, isSent: isSent});
+        // isSent= true;
+        res.redirect('/' + object.user_id + '/' + object.object_id + '/recover');
+        // res.render("recover_object.hbs", {object: object, isSent: isSent});
     });
 
     app.post("/:user_id/:object_id/update_status", (req, res) => {
