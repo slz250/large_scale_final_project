@@ -2,7 +2,7 @@ const db = require('../db/index.js')
 const bcrypt = require('bcrypt');
 const sgMail = require('@sendgrid/mail');
 
-let user_global = null;
+// let user_global = null;
 
 module.exports = function (app, passport) {
     /**
@@ -21,10 +21,9 @@ module.exports = function (app, passport) {
     });
 
     app.get("/", function (req, res) {
-        if (req.isAuthenticated()) {
-
-            res.redirect("/")
-        }
+        // if (req.isAuthenticated()) {
+        //     res.redirect("/" + user_global.user_id)
+        // }
         res.render("index.hbs");
     });
 
@@ -44,7 +43,7 @@ module.exports = function (app, passport) {
                 req.logIn(user, function (err) {
                     if (err) console.log(err)
                     else {
-                        user_global = user;
+                        // user_global = user;
                         console.log('Sign in successfull')
                         return res.redirect('/' + user.user_id);
                     }
