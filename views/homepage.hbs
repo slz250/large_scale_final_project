@@ -7,41 +7,49 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 </head>
 <body>
-<header>
-    <h1>Homepage</h1>
-</header>
-<body>
-<h2>User Information</h2>
-<ul>
-    <li>user_id: {{user_id}}</li>
-    <li>first_name: {{first_name}}</li>
-    <li>last_name: {{last_name}}</li>
-    <li>email: {{email}}</li>
-    <li>username: {{username}}</li>
-    <!--<li>password: {{password}}</li>-->
-</ul>
-<h2>Your list of objects</h2>
-<ul>
-    {{#each objects}}
-        <li><a href="{{this.user_id}}/{{this.object_id}}">{{this.name}}</a></li>
-          <form name="deleteForm" method="POST" action="/{{this.user_id}}/{{this.object_id}}/delete">
-            <input type="hidden" name="user" value="{{this.user_id}}"/>
-            <input type="hidden" name="object" value="{{this.object_id}}"/>
-            <button type="submit" class="btn bt">Delete Item</button>
-          </form>
-        <br>
-    {{/each}}
-</ul>
-
-<form name='myForm' method="POST" action="/{{user_id}}">
-    Item Name: <input type="text" name="object"/>
-    <button type="submit" class="btn btn-default btn-lg">add item</button>
-</form>
+<div class="container">
+    <div class="jumbotron text-center">
+        <header>
+            <h1>Homepage</h1>
+        </header>
+        <h2>User Information</h2>
+        <ul>
+            <li>First Name: {{first_name}}</li>
+            <li>Last Name: {{last_name}}</li>
+            <li>Email: {{email}}</li>
+            <li>Username: {{username}}</li>
+        </ul>
+    </div>
+</div>
 
 
-<a href="/logout">
-    <button type="submit" class="btn btn-default btn-lg">logout</button>
-</a>
-</body>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h2>Your list of objects</h2>
+        <ul>
+            {{#each objects}}
+                <li><a href="{{this.user_id}}/{{this.object_id}}">{{this.name}}</a></li>
+                <form name="deleteForm" method="POST" action="/{{this.user_id}}/{{this.object_id}}/delete">
+                    <input type="hidden" name="user" value="{{this.user_id}}"/>
+                    <input type="hidden" name="object" value="{{this.object_id}}"/>
+                    <button type="submit" class="btn bt">Delete Item</button>
+                </form>
+                <br>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <form name='myForm' method="POST" action="/{{user_id}}">
+            Item Name: <input type="text" name="object"/>
+            <button type="submit" class = "btn bt">Add Item</button>
+        </form>
+        <a href="/logout">
+            <button type="submit" class = "btn bt">Logout</button>
+        </a>
+    </div>
+</div>
 </body>
 </html>

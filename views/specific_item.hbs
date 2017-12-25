@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>testing</title>
-  </head>
-  <body>
-    <h1>Item Status</h1>
-    <h3>Name: {{object.name}}</h3>
-    <h3>Current Status: {{object.state}}</h3>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>Item Status</h1>
+        <h3>Name: {{object.name}}</h3>
+        <h3>Current Status: {{object.state}}</h3>
 
-    <form method = "post" action = "/{{id.user_id}}/{{id.object_id}}/update_status">
-        In-Possession <input type = "radio" name = "item_status" value = 2>
-        <br />
-        Found <input type = "radio" name = "item_status" value = 1>
-        <br />
-        Lost <input type = "radio" name = "item_status" value = 0><br><br>
-        <br />
-        <input type="hidden" name="user" value="{{id.user_id}}"/>
-        <input type="hidden" name="object" value="{{id.object_id}}"/>
-        <input type = "submit" value = "Update Status">
-    </form>
+        <form method="post" action="/{{id.user_id}}/{{id.object_id}}/update_status">
+            In-Possession <input type="radio" name="item_status" value=2>
+            <br/>
+            Found <input type="radio" name="item_status" value=1>
+            <br/>
+            Lost <input type="radio" name="item_status" value=0><br><br>
+            <br/>
+            <input type="hidden" name="user" value="{{id.user_id}}"/>
+            <input type="hidden" name="object" value="{{id.object_id}}"/>
+            <input type="submit" class="btn bt" value="Update Status">
+        </form>
+    </div>
+</div>
 
-    <h1>Your Item's QR Code</h1>
-    <div id="qrcode"></div>
+<div class=container>
+    <div class="jumbotron text-center">
+        <h1>Your Item's QR Code</h1>
+        <div id="qrcode"></div>
+        <br>
+        <br>
+        <form action="/{{id.user_id}}">
+            <input type="submit" class="btn bt" value="Back to homepage"/>
+        </form>
 
-    <br>
-    <br>
+    </div>
+</div>
 
-    <form action="/{{id.user_id}}">
-      <input type="submit" value="Back to homepage"/>
-    </form>
-    <script type="text/javascript">
-      new QRCode(document.getElementById("qrcode"), "qr-found.herokuapp.com/{{id.user_id}}/{{id.object_id}}/recover");
-    </script>
-  </body>
+<script type="text/javascript">
+    new QRCode(document.getElementById("qrcode"), "qr-found.herokuapp.com/{{id.user_id}}/{{id.object_id}}/recover");
+</script>
+</body>
 </html>

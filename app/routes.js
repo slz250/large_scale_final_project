@@ -1,15 +1,6 @@
 const db = require('../db/index.js')
 const bcrypt = require('bcrypt');
 const sgMail = require('@sendgrid/mail');
-// const QRcode = require("../public/davidshimjs-qrcodejs-04f46c6/qrcode");
-// require("../public/davidshimjs-qrcodejs-04f46c6/jquery.min")
-
-/* must run these ini console beforehand in order for emails to work
-1. echo "export SENDGRID_API_KEY='API KEY'" > sendgrid.env
-                *the 'API KEY' I will have to message to you or w/e or else I get banned from sendgrid lol
-2. echo "sendgrid.env" >> .gitignore
-3. source ./sendgrid.env
-*/
 
 let user_global = null;
 
@@ -23,10 +14,8 @@ module.exports = function (app, passport) {
                 console.log(err);
                 res.send(err);
             } else {
-                //res.send(result.rows)
                 res.json(result.rows);
                 console.log("still works");
-                //console.log(results)
             }
         });
     });
@@ -68,11 +57,6 @@ module.exports = function (app, passport) {
     app.get('/logout', function (req, res) {
         req.logout();
         console.log('its trying to logout')
-        // req.session.destroy(function (err) {
-        //   if (err) { return next(err); }
-        //   // The response should indicate that the user is no longer authenticated.
-        //   return res.send({ authenticated: req.isAuthenticated() });
-        // });
         user_global = null;
         res.redirect('/');
     });
@@ -118,6 +102,7 @@ module.exports = function (app, passport) {
         last_name text,
         username text,
         password text
+        )
 
         */
         let checkQuery = {
@@ -230,16 +215,11 @@ module.exports = function (app, passport) {
                 res.send(err);
             } else {
                 object = result.rows[0];
-                //console.log(result.rows[0]);
-                //console.log(req.params);
                 /**
                  * qr code
                  */
-                // const qrcode = new QRcode("qrcode");
-                // qrcode.makeCode(host + "/" + req.params.user_id + "/" + req.params.object_id);
                 object.state = object.state === 2 ? "In-Possession" : object.state === 1 ? "Found" : "Lost";
                 res.render("specific_item.hbs", {object: object, id: req.params});
-                // res.sendFile("C:\Users\micha\Desktop\testqr\testing\index.html");
             }
 
         });
@@ -258,7 +238,6 @@ module.exports = function (app, passport) {
                 user_id: req.params.user_id,
                 object_id: req.params.object_id,
         }
-        // let isSent = false;
         let query = {
             text: 'SELECT email FROM user_table where user_id = $1',
             values: [object.user_id]
@@ -286,21 +265,8 @@ module.exports = function (app, passport) {
     });
 
     app.post("/:user_id/:object_id/update_status", (req, res) => {
-        // res.send(req.body.item_status);
-        // if (Object.keys(req.body).length !== 0) {
-        //     const status = parseInt(req.body.item_status);
-        //     db.query("UPDATE object_table set state = " + status + "where object_id = 12032017", (err, result) => {
-        //         if (err) {
-        //             res.send(err);
-        //         }
-        //         let url = "/" + req.body.user_id;
-        //         res.redirect(url)
-        //     });
-        // }
 
         if (Object.keys(req.body).length !== 0) {
-          // console.log(req.body);
-          // console.log(req)
           let status = req.body.item_status,
               user = req.body.user,
               object = req.body.object,
@@ -308,7 +274,6 @@ module.exports = function (app, passport) {
                 text: "UPDATE object_table SET state=$1 WHERE user_id=$2 AND object_id=$3",
                 values: [status, user, object]
               }
-              // console.log(query)
               db.query(query, (err, result) => {
                 if (err) {
                   return res.send(err);
